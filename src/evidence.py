@@ -104,5 +104,6 @@ nb = dict(zip(fb.player_id, fb.name)); nw = dict(zip(fw.player_id, fw.name))
 network = [dict(bat=nb[r.striker_id], bowl=nw[r.bowler_id], balls=int(r.balls), runs=int(r.runs), vs_expected=r1(r.runs - r.xr), outs=int(r.outs))
            for r in g.itertuples() if r.balls >= 6]
 with open(os.path.join(DASH, "data.js"), "w", encoding="utf-8") as f:
-    f.write("window.CRUCIBLE = " + json.dumps(dict(facts=facts, oot=oot, network=network, **dash), default=str) + ";\n")
+    js = json.dumps(dict(facts=facts, oot=oot, network=network, **dash), default=str).replace("Namboori Tilak Varma", "Tilak Varma")  # display name
+    f.write("window.CRUCIBLE = " + js + ";\n")
 print(json.dumps(facts, default=str)[:600]); print(oot)
