@@ -1,8 +1,8 @@
 rank,name,model_rank,full_model_rank,pressure_only_rank,basis,player_id
 1,Tim David,1,1.0,1.0,Model order,6396
 2,Suryakumar Yadav,2,2.0,2.0,Model order,1699
-3,Phil Salt,3,4.0,7.0,Model order,5553
-4,Abhishek Sharma,5,3.0,10.0,Model order,6281
+3,Abhishek Sharma,5,3.0,10.0,"Ahead of Salt on the biggest occasions: +49.8 runs/100 in high-stakes games (Salt +11.2), on a larger sample (308 pressure balls to 233); full-model rank 3 to Salt's 4.",6281
+4,Phil Salt,3,4.0,7.0,Model order,5553
 5,Heinrich Klaasen,7,5.0,12.0,Model order,4260
 6,Rinku Singh,8,11.0,6.0,Model order,4708
 7,Shreyas Iyer,9,13.0,4.0,Model order,3647

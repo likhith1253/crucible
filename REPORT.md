@@ -14,8 +14,8 @@ This report explains how pressure is defined, how a player's performance on a si
 |---|---|---|---|---|---|---|---|---|
 | 1 | Tim David | 327 | 194 | +45.9 | +42.1 | +49.0 | +39.2 | 8 of 10 |
 | 2 | Suryakumar Yadav | 506 | 180 | +28.6 | +13.8 | +43.5 | +27.2 | 8 of 10 |
-| 3 | Phil Salt | 233 | 175 | +32.7 | +54.6 | +18.9 | +11.2 | 8 of 9 |
-| 4 | Abhishek Sharma | 308 | 169 | +25.4 | −3.2 | +78.3 | +49.8 | 5 of 8 |
+| 3 | Abhishek Sharma | 308 | 169 | +25.4 | −3.2 | +78.3 | +49.8 | 5 of 8 |
+| 4 | Phil Salt | 233 | 175 | +32.7 | +54.6 | +18.9 | +11.2 | 8 of 9 |
 | 5 | Heinrich Klaasen | 227 | 166 | +18.7 | +18.8 | +18.5 | +18.9 | 5 of 7 |
 | 6 | Rinku Singh | 204 | 175 | +19.8 | +10.5 | +46.4 | +58.7 | 7 of 8 |
 | 7 | Shreyas Iyer | 315 | 167 | +19.0 | +26.6 | −1.8 | +12.9 | 4 of 7 |
@@ -209,6 +209,7 @@ Where a model placement did not stand up, we changed it. Every change is listed 
 | Wanindu Hasaranga out | 10 | Barely better than average under pressure in T20Is (+0.06 runs saved per over) and no IPL in 2026. |
 | Krunal Pandya not added | 11 | No T20I pressure record to test against; death economy 10.48. |
 | Maheesh Theekshana in at 10 | 16 | Saved runs under pressure in all 9 of his season blocks: +1.56 IPL, +1.37 T20I, +1.54 in high-stakes games over 275 balls. |
+| Abhishek Sharma above Phil Salt | 5 / 3 | Far stronger on the biggest occasions: +49.8 runs per 100 in high-stakes games against Salt's +11.2, on a larger sample (308 pressure balls to 233). The full model also ranks him higher (3rd to 4th). |
 | Yashasvi Jaiswal to 8 | 6 | His T20I figure (+56.5) rests on only 37 pressure balls. His IPL record (+10.8 over 258 balls) is the weakest of the top eight, and he was flat in 2026 (−0.4). |
 | Jasprit Bumrah to 1 | 3 | The top three bowlers are a statistical tie in the model. Bumrah has the best rate (1.99 runs saved per over), the best in high-stakes games (2.43) and saved runs in every season block. |
 
@@ -255,7 +256,7 @@ Bowling under pressure repeats moderately well. Batting under pressure is much n
 - Run-outs are credited to no one.
 - Fielding and captaincy are not measured.
 - The one-third IPL share rule was set after an early look at the rankings (section 6).
-- Five placements come from the evidence checks rather than straight from the model (section 7). All are listed with their evidence.
+- Six placements come from the evidence checks rather than straight from the model (section 7). All are listed with their evidence.
 
 ---
 

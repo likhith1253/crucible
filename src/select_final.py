@@ -28,7 +28,8 @@ REVIEW = {
             "Travis Head": "Positive under pressure in both IPL (+32.3/100) and T20I (+9.1); positive in 5 of 7 season blocks.",
         },
         "first": None,
-        "place": {"Yashasvi Jaiswal": (8, "T20I figure rests on 37 pressure balls; IPL record (+10.8 over 258 balls) is the weakest of the top eight and 2026 was flat (-0.4).")},
+        "place": {"Abhishek Sharma": (3, "Ahead of Salt on the biggest occasions: +49.8 runs/100 in high-stakes games (Salt +11.2), on a larger sample (308 pressure balls to 233); full-model rank 3 to Salt's 4."),
+                  "Yashasvi Jaiswal": (8, "T20I figure rests on 37 pressure balls; IPL record (+10.8 over 258 balls) is the weakest of the top eight and 2026 was flat (-0.4).")},
     },
     "bowl": {
         "remove": {
