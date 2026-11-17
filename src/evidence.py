@@ -53,7 +53,7 @@ for side, lab, idc, ucol, fn, T in (("bat", "batter", "striker_id", "u_bat", bat
     M = pd.read_csv(os.path.join(OUT, f"model_ranking_{lab}s.csv"))
     F = pd.read_csv(os.path.join(OUT, f"final_{lab}s.csv"))
     X = pd.read_csv(os.path.join(OUT, f"excluded_{lab}s.csv"))
-    pool = M[M.model_rank <= 30]
+    pool = M
     rows = []
     for _, r in pool.iterrows():
         B = T[T[idc] == r.player_id]; P = B[B[ucol] >= 0.8]
@@ -93,6 +93,9 @@ heat = P2.assign(ob=(P2.over // 4).astype(int).clip(upper=4), wk=(P2.wkts.clip(u
 facts["chase_pressure_grid"] = [dict(overs=f"{4*o+1}-{4*o+4 if o < 4 else 20}", wickets=f"{2*w}-{2*w+1}" if w < 4 else "8+", share=v) for (o, w), v in heat.items()]
 ph = A[A.u_bowl >= 0.8].groupby("phase").size(); facts["pressure_by_phase_bowl"] = {k: int(v) for k, v in ph.items()}
 ph = L[L.u_bat >= 0.8].groupby("phase").size(); facts["pressure_by_phase_bat"] = {k: int(v) for k, v in ph.items()}
+# share of balls in each over (1-20) that are pressure balls, by innings, for each side
+facts["pressure_by_over"] = {s: {str(i): [r1(v) for v in T[T.innings == i].groupby("over")[u].apply(lambda x: (x >= 0.8).mean()).reindex(range(1, 21)).values]
+                                 for i in (1, 2)} for s, T, u in (("bat", L, "u_bat"), ("bowl", A, "u_bowl"))}
 # head-to-head network between the two final lists (all legal balls): balls, runs above expected for the batter, dismissals
 fb = pd.read_csv(os.path.join(OUT, "final_batters.csv")); fw = pd.read_csv(os.path.join(OUT, "final_bowlers.csv"))
 H = L[L.striker_id.isin(fb.player_id) & L.bowler_id.isin(fw.player_id)]
