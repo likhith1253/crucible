@@ -1,0 +1,11 @@
+rank,name,model_rank,full_model_rank,pressure_only_rank,basis,player_id
+1,Tim David,1,1.0,1.0,Model order,6396
+2,Suryakumar Yadav,2,2.0,2.0,Model order,1699
+3,Phil Salt,3,4.0,7.0,Model order,5553
+4,Abhishek Sharma,5,3.0,10.0,Model order,6281
+5,Yashasvi Jaiswal,6,10.0,3.0,Model order,6819
+6,Heinrich Klaasen,7,5.0,12.0,Model order,4260
+7,Rinku Singh,8,11.0,6.0,Model order,4708
+8,Shreyas Iyer,9,13.0,4.0,Model order,3647
+9,Sanju Samson,21,22.0,25.0,Positive under pressure in both IPL (+23.4/100 over 200 balls) and T20I (+1.1); +10.9 in high-stakes games.,2258
+10,Travis Head,26,23.0,38.0,Positive under pressure in both IPL (+32.3/100) and T20I (+9.1); positive in 5 of 7 season blocks.,2367

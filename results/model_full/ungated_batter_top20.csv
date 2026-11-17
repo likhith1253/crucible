@@ -1,0 +1,21 @@
+player_id,rank_without_share_rule,name,conservative_rating_q10,top10_probability_without_share_rule,ipl_evidence_share,eligible_primary
+6396,1.0,Tim David,0.2794,0.99,0.5974,True
+1699,2.0,Suryakumar Yadav,0.2079,0.9333,0.4938,True
+6281,3.0,Abhishek Sharma,0.161,0.7967,0.517,True
+5553,4.0,Phil Salt,0.1261,0.6333,0.4537,True
+4260,5.0,Heinrich Klaasen,0.1117,0.51,0.8381,True
+1318,6.0,Andre Russell,0.1066,0.55,0.7151,True
+3125,7.0,Nicholas Pooran,0.0872,0.3067,0.6191,True
+813,8.0,Jos Buttler,0.0813,0.2333,0.6166,True
+5939,9.0,Cameron Green,0.0811,0.3733,0.6002,True
+6280,10.0,Harry Brook,0.0774,0.41,0.2119,False
+6819,11.0,Yashasvi Jaiswal,0.0662,0.2767,0.7696,True
+4708,12.0,Rinku Singh,0.0634,0.25,0.6735,True
+7897,13.0,Namboori Tilak Varma,0.0616,0.13,0.6473,True
+3647,14.0,Shreyas Iyer,0.0615,0.16,0.6029,True
+4736,15.0,Josh Inglis,0.0503,0.2833,0.2902,False
+2756,16.0,Shashank Singh,0.0412,0.3233,1.0,True
+8101,17.0,Ashutosh Sharma,0.0411,0.3033,1.0,True
+4986,18.0,Rovman Powell,0.0275,0.0833,0.3326,False
+25213,19.0,Dewald Brevis,0.0261,0.2467,0.7146,True
+47,20.0,Virat Kohli,0.0227,0.0733,0.8232,True

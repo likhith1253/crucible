@@ -1,0 +1,21 @@
+player_id,rank_without_share_rule,name,conservative_rating_q10,top10_probability_without_share_rule,ipl_evidence_share,eligible_primary
+781,1.0,Sunil Narine,0.1923,0.9333,1.0,True
+830,2.0,Josh Hazlewood,0.189,0.9467,0.648,True
+4722,3.0,Rashid Khan,0.1692,0.8833,0.661,True
+2933,4.0,Jasprit Bumrah,0.1625,0.86,0.6993,True
+7920,5.0,Nathan Ellis,0.1075,0.6333,0.3171,False
+3644,6.0,Kuldeep Yadav,0.106,0.6067,0.7289,True
+360,7.0,Bhuvneshwar Kumar,0.0999,0.53,0.7643,True
+4373,8.0,Mustafizur Rahman,0.0806,0.3933,0.3392,True
+2876,9.0,Axar Patel,0.066,0.33,0.5039,True
+4900,10.0,Wanindu Hasaranga,0.0563,0.3233,0.4268,True
+6256,11.0,Varun Chakravarthy,0.0562,0.3133,0.6845,True
+1758,12.0,Patrick Cummins,0.0371,0.2367,0.8439,True
+4219,13.0,Krunal Pandya,0.0363,0.29,1.0,True
+3628,14.0,Kagiso Rabada,0.0293,0.3067,0.7869,True
+8661,15.0,Matheesha Pathirana,0.027,0.2167,0.668,True
+4101,16.0,Mitchell Santner,0.0162,0.18,0.3657,True
+4641,17.0,Lungi Ngidi,0.009,0.2867,0.4135,True
+2320,18.0,Trent Boult,0.0042,0.1867,0.9289,True
+7967,19.0,Noor Ahmad,0.0036,0.0967,0.7332,True
+278,20.0,Tim Southee,0.0004,0.19,0.3278,False

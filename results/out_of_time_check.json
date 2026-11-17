@@ -1,0 +1,12 @@
+{
+ "bat": {
+  "players": 53,
+  "rank_correlation": 0.05,
+  "top_quartile_stays_above_median": 0.71
+ },
+ "bowl": {
+  "players": 53,
+  "rank_correlation": 0.3,
+  "top_quartile_stays_above_median": 0.79
+ }
+}

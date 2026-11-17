@@ -1,0 +1,60 @@
+{
+ "raw_rows": 200999,
+ "raw_matches_bbb": 867,
+ "matches_file": 883,
+ "matches_by_family": {
+  "T20I": 482,
+  "IPL": 371,
+  "OTHER": 30
+ },
+ "excluded_other_competitions": [
+  "Asia Cup Rising Stars 2025",
+  "Mens T20 Emerging Teams Asia Cup 2024"
+ ],
+ "no_ballbyball_for_listed_matches": 16,
+ "duplicate_deliveries": 0,
+ "superover_rows_excluded": 26,
+ "wicket_types": {
+  "Caught": 7327,
+  "Bowled": 1689,
+  "LBW": 666,
+  "RunOut": 571,
+  "Stump": 200,
+  "Hit Wicket": 17,
+  "Retire Out": 6,
+  "Obstracting the field": 1,
+  "Obstructing the field": 1
+ },
+ "dismissed_not_striker": 262,
+ "innings_over_120_legal_balls": 0,
+ "reconcile_runs_margin_checked": 385,
+ "reconcile_runs_margin_ok": 383,
+ "reconcile_wkts_checked": 389,
+ "reconcile_wkts_ok": 389,
+ "reconcile_wkts_margin_ok": 388,
+ "runs_margin_mismatch_examples": [
+  20182,
+  24822
+ ],
+ "rain_revised_matches_excluded": 34,
+ "no_result_or_abandoned_in_scope": 24,
+ "matches_in_analysis": 773,
+ "deliveries_in_analysis": 184930,
+ "truncated_innings_flagged": 19,
+ "striker_order_equals_supplied_batting_order_pct": 0.9998377764559563,
+ "tied_matches_super_over": 4,
+ "seasons": [
+  2022,
+  2023,
+  2024,
+  2025,
+  2026
+ ],
+ "date_min": "2022-01-22",
+ "date_max": "2026-11-01",
+ "deliveries_by_family": {
+  "T20I": 99611,
+  "IPL": 85319
+ },
+ "legal_ball_count_check_max_per_innings": 120
+}
