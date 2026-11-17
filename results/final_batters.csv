@@ -1,11 +1,11 @@
 rank,name,model_rank,full_model_rank,pressure_only_rank,basis,player_id
 1,Tim David,1,1.0,1.0,Model order,6396
 2,Suryakumar Yadav,2,2.0,2.0,Model order,1699
-3,Abhishek Sharma,5,3.0,10.0,"Ahead of Salt on the biggest occasions: +49.8 runs/100 in high-stakes games (Salt +11.2), on a larger sample (308 pressure balls to 233); full-model rank 3 to Salt's 4.",6281
+3,Abhishek Sharma,5,3.0,10.0,"+49.8 runs per 100 in high-stakes games against Salt's +11.2, on a larger sample (308 pressure balls to 233); second only to Suryakumar Yadav on match-winning performances (Salt eighth).",6281
 4,Phil Salt,3,4.0,7.0,Model order,5553
 5,Heinrich Klaasen,7,5.0,12.0,Model order,4260
 6,Rinku Singh,8,11.0,6.0,Model order,4708
 7,Shreyas Iyer,9,13.0,4.0,Model order,3647
-8,Yashasvi Jaiswal,6,10.0,3.0,T20I figure rests on 37 pressure balls; IPL record (+10.8 over 258 balls) is the weakest of the top eight and 2026 was flat (-0.4).,6819
-9,Sanju Samson,21,22.0,25.0,Positive under pressure in both IPL (+23.4/100 over 200 balls) and T20I (+1.1); +10.9 in high-stakes games.,2258
-10,Travis Head,26,23.0,38.0,Positive under pressure in both IPL (+32.3/100) and T20I (+9.1); positive in 5 of 7 season blocks.,2367
+8,Yashasvi Jaiswal,6,10.0,3.0,T20I figure rests on 37 pressure balls; IPL record (+10.8 per 100 over 258 balls) is the weakest of the top eight; flat in 2026.,6819
+9,Virat Kohli,13,17.0,8.0,"Hardest batter to dismiss under pressure (one dismissal every 47 pressure balls, best of all eligible batters) over 424 pressure balls; pressure-only model rank 8; top ten in four of five ranking methods.",47
+10,Namboori Tilak Varma,16,12.0,20.0,"Heaviest pressure workload of any eligible batter (495 pressure balls, 266 in high-stakes games, where he is above expected); full-model rank 12; top ten under the reliability index and match-winning methods.",7897

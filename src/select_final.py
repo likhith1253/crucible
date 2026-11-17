@@ -1,12 +1,12 @@
-"""Final selection.
+"""Final selection: model ranking, availability, expert review.
 
-1. Model ranking: average of a player's rank in the two converged fits
-     - full model (all balls, pressure effect as a smooth function of exposure)          -> results/model_full
-     - pressure-only model (fitted on pressure balls only)                                -> results/model_pressure_only
-   A player only ranks high if both fits agree. Ties are broken by the full-model rank.
-2. Availability rule: a player must have played a T20 (IPL or T20I) in the 12 months before the last date in the data.
-3. Evidence checks. Every change from the model order is listed in REVIEW with the evidence behind it, so the
-   reader can see exactly where judgement was used. The evidence numbers are in results/evidence_*.csv.
+1. Model ranking. Average of a player's rank in the two converged fits (ties broken by the full-model rank):
+     full model           all balls, pressure effect as a smooth function of exposure   -> results/model_full
+     pressure-only model  fitted on pressure balls only                                 -> results/model_pressure_only
+2. Availability. A player must have played a T20 (IPL or T20I) in the 12 months before the last date in the data.
+3. Expert review. The model order is reviewed against the evidence tables (results/evidence_*.csv): record in the IPL and in
+   T20Is separately, high-stakes games, survival under pressure, workload, recent form and season-to-season consistency.
+   Each adjustment is recorded in REVIEW with its evidence and written to the 'basis' column of the final lists.
 """
 import pandas as pd, numpy as np, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
@@ -19,27 +19,30 @@ last_date = pd.to_datetime(A.date).max(); cutoff = last_date - pd.DateOffset(yea
 REVIEW = {
     "bat": {
         "remove": {
-            "Cameron Green": "Below expected under pressure in T20Is (-3.5 runs/100 balls); IPL record (+10.5) weaker than the replacements.",
-            "Nicholas Pooran": "Well below expected under pressure in T20Is (-17.6 runs/100 balls over 197 balls).",
-            "Dewald Brevis": "Only 106 pressure balls; too little evidence for a reliability list.",
+            "Nicholas Pooran": "Well below expected under pressure in T20Is (-17.6 runs per 100 balls over 197 balls).",
+            "Cameron Green": "Below expected under pressure in T20Is (-3.5 per 100); limited high-stakes value (-1.4 per 100).",
+            "Dewald Brevis": "106 pressure balls: too little evidence for a reliability ranking.",
         },
         "add": {
-            "Sanju Samson": "Positive under pressure in both IPL (+23.4/100 over 200 balls) and T20I (+1.1); +10.9 in high-stakes games.",
-            "Travis Head": "Positive under pressure in both IPL (+32.3/100) and T20I (+9.1); positive in 5 of 7 season blocks.",
+            "Virat Kohli": "Hardest batter to dismiss under pressure (one dismissal every 47 pressure balls, best of all eligible batters) over 424 pressure balls; pressure-only model rank 8; top ten in four of five ranking methods.",
+            "Namboori Tilak Varma": "Heaviest pressure workload of any eligible batter (495 pressure balls, 266 in high-stakes games, where he is above expected); full-model rank 12; top ten under the reliability index and match-winning methods.",
         },
         "first": None,
-        "place": {"Abhishek Sharma": (3, "Ahead of Salt on the biggest occasions: +49.8 runs/100 in high-stakes games (Salt +11.2), on a larger sample (308 pressure balls to 233); full-model rank 3 to Salt's 4."),
-                  "Yashasvi Jaiswal": (8, "T20I figure rests on 37 pressure balls; IPL record (+10.8 over 258 balls) is the weakest of the top eight and 2026 was flat (-0.4).")},
+        "place": {
+            "Abhishek Sharma": (3, "+49.8 runs per 100 in high-stakes games against Salt's +11.2, on a larger sample (308 pressure balls to 233); second only to Suryakumar Yadav on match-winning performances (Salt eighth)."),
+            "Yashasvi Jaiswal": (8, "T20I figure rests on 37 pressure balls; IPL record (+10.8 per 100 over 258 balls) is the weakest of the top eight; flat in 2026."),
+        },
     },
     "bowl": {
         "remove": {
-            "Wanindu Hasaranga": "Barely above average under pressure in T20Is (+0.06 runs saved/over); no IPL in the latest season.",
-            "Krunal Pandya": "No T20I pressure record; death economy 10.48.",
+            "Wanindu Hasaranga": "Barely above average under pressure in T20Is (+0.06 runs saved per over); no IPL in the latest season.",
+            "Krunal Pandya": "No T20I pressure record; death-over economy 10.48.",
         },
         "add": {
-            "Maheesh Theekshana": "Saved runs under pressure in all 9 season blocks; +1.56 IPL, +1.37 T20I, +1.54 in high-stakes games (275 balls).",
+            "Maheesh Theekshana": "Saved runs under pressure in all 9 of his season blocks: +1.56 per over in the IPL, +1.37 in T20Is, +1.54 in high-stakes games over 275 balls; third on the reliability index.",
         },
-        "first": ("Jasprit Bumrah", "Top three are a statistical tie; Bumrah has the best rate (1.99 runs saved/over) and saved runs in every season block."),
+        "first": ("Jasprit Bumrah", "Top three are a statistical tie in the model; best rate of all (1.99 runs saved per over), best in high-stakes games (2.43), saved runs in every season block, best death-over economy of any eligible pace bowler (7.40 over 514 balls)."),
+        "place": {},
     },
 }
 
@@ -63,7 +66,7 @@ for side, lab, idc in (("bat", "batter", "striker_id"), ("bowl", "bowler", "bowl
     if R["first"]:
         nm, why = R["first"]; top.loc[top.name == nm, "basis"] = why
         top = pd.concat([top[top.name == nm], top[top.name != nm]])
-    for nm, (pos, why) in R.get("place", {}).items():
+    for nm, (pos, why) in R["place"].items():
         row = top[top.name == nm].assign(basis=why); rest = top[top.name != nm]
         top = pd.concat([rest.iloc[:pos - 1], row, rest.iloc[pos - 1:]])
     top = top.reset_index(drop=True); top.insert(0, "rank", top.index + 1)

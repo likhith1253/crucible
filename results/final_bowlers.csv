@@ -1,5 +1,5 @@
 rank,name,model_rank,full_model_rank,pressure_only_rank,basis,player_id
-1,Jasprit Bumrah,3,4.0,4.0,Top three are a statistical tie; Bumrah has the best rate (1.99 runs saved/over) and saved runs in every season block.,2933
+1,Jasprit Bumrah,3,4.0,4.0,"Top three are a statistical tie in the model; best rate of all (1.99 runs saved per over), best in high-stakes games (2.43), saved runs in every season block, best death-over economy of any eligible pace bowler (7.40 over 514 balls).",2933
 2,Josh Hazlewood,1,2.0,2.0,Model order,830
 3,Rashid Khan,2,3.0,1.0,Model order,4722
 4,Sunil Narine,4,1.0,8.0,Model order,781
@@ -8,4 +8,4 @@ rank,name,model_rank,full_model_rank,pressure_only_rank,basis,player_id
 7,Axar Patel,7,8.0,7.0,Model order,2876
 8,Varun Chakravarthy,8,10.0,5.0,Model order,6256
 9,Mustafizur Rahman,9,7.0,12.0,Model order,4373
-10,Maheesh Theekshana,16,24.0,10.0,"Saved runs under pressure in all 9 season blocks; +1.56 IPL, +1.37 T20I, +1.54 in high-stakes games (275 balls).",19316
+10,Maheesh Theekshana,16,24.0,10.0,"Saved runs under pressure in all 9 of his season blocks: +1.56 per over in the IPL, +1.37 in T20Is, +1.54 in high-stakes games over 275 balls; third on the reliability index.",19316
