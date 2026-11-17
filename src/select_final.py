@@ -5,7 +5,7 @@
      - pressure-only model (fitted on pressure balls only)                                -> results/model_pressure_only
    A player only ranks high if both fits agree. Ties are broken by the full-model rank.
 2. Availability rule: a player must have played a T20 (IPL or T20I) in the 12 months before the last date in the data.
-3. Selection review. Every change from the model order is listed in REVIEW with the evidence behind it, so the
+3. Evidence checks. Every change from the model order is listed in REVIEW with the evidence behind it, so the
    reader can see exactly where judgement was used. The evidence numbers are in results/evidence_*.csv.
 """
 import pandas as pd, numpy as np, os, sys
@@ -28,6 +28,7 @@ REVIEW = {
             "Travis Head": "Positive under pressure in both IPL (+32.3/100) and T20I (+9.1); positive in 5 of 7 season blocks.",
         },
         "first": None,
+        "place": {"Yashasvi Jaiswal": (8, "T20I figure rests on 37 pressure balls; IPL record (+10.8 over 258 balls) is the weakest of the top eight and 2026 was flat (-0.4).")},
     },
     "bowl": {
         "remove": {
@@ -61,6 +62,9 @@ for side, lab, idc in (("bat", "batter", "striker_id"), ("bowl", "bowler", "bowl
     if R["first"]:
         nm, why = R["first"]; top.loc[top.name == nm, "basis"] = why
         top = pd.concat([top[top.name == nm], top[top.name != nm]])
+    for nm, (pos, why) in R.get("place", {}).items():
+        row = top[top.name == nm].assign(basis=why); rest = top[top.name != nm]
+        top = pd.concat([rest.iloc[:pos - 1], row, rest.iloc[pos - 1:]])
     top = top.reset_index(drop=True); top.insert(0, "rank", top.index + 1)
     cols = ["rank", "name", "model_rank", "full_model_rank", "pressure_only_rank", "basis", "player_id"]
     top[cols].to_csv(os.path.join(OUT, f"final_{lab}s.csv"), index=False)

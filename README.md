@@ -15,10 +15,10 @@ CRUCIBLE ranks the IPL and T20I batters and bowlers who perform most reliably wh
 | 2 | Suryakumar Yadav | Josh Hazlewood |
 | 3 | Phil Salt | Rashid Khan |
 | 4 | Abhishek Sharma | Sunil Narine |
-| 5 | Yashasvi Jaiswal | Bhuvneshwar Kumar |
-| 6 | Heinrich Klaasen | Kuldeep Yadav |
-| 7 | Rinku Singh | Axar Patel |
-| 8 | Shreyas Iyer | Varun Chakravarthy |
+| 5 | Heinrich Klaasen | Bhuvneshwar Kumar |
+| 6 | Rinku Singh | Kuldeep Yadav |
+| 7 | Shreyas Iyer | Axar Patel |
+| 8 | Yashasvi Jaiswal | Varun Chakravarthy |
 | 9 | Sanju Samson | Mustafizur Rahman |
 | 10 | Travis Head | Maheesh Theekshana |
 

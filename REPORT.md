@@ -16,10 +16,10 @@ This report explains how pressure is defined, how a player's performance on a si
 | 2 | Suryakumar Yadav | 506 | 180 | +28.6 | +13.8 | +43.5 | +27.2 | 8 of 10 |
 | 3 | Phil Salt | 233 | 175 | +32.7 | +54.6 | +18.9 | +11.2 | 8 of 9 |
 | 4 | Abhishek Sharma | 308 | 169 | +25.4 | −3.2 | +78.3 | +49.8 | 5 of 8 |
-| 5 | Yashasvi Jaiswal | 295 | 161 | +16.5 | +10.8 | +56.5 | +40.4 | 5 of 7 |
-| 6 | Heinrich Klaasen | 227 | 166 | +18.7 | +18.8 | +18.5 | +18.9 | 5 of 7 |
-| 7 | Rinku Singh | 204 | 175 | +19.8 | +10.5 | +46.4 | +58.7 | 7 of 8 |
-| 8 | Shreyas Iyer | 315 | 167 | +19.0 | +26.6 | −1.8 | +12.9 | 4 of 7 |
+| 5 | Heinrich Klaasen | 227 | 166 | +18.7 | +18.8 | +18.5 | +18.9 | 5 of 7 |
+| 6 | Rinku Singh | 204 | 175 | +19.8 | +10.5 | +46.4 | +58.7 | 7 of 8 |
+| 7 | Shreyas Iyer | 315 | 167 | +19.0 | +26.6 | −1.8 | +12.9 | 4 of 7 |
+| 8 | Yashasvi Jaiswal | 295 | 161 | +16.5 | +10.8 | +56.5 | +40.4 | 5 of 7 |
 | 9 | Sanju Samson | 314 | 161 | +15.3 | +23.4 | +1.2 | +10.9 | 6 of 10 |
 | 10 | Travis Head | 174 | 156 | +18.6 | +32.3 | +9.1 | +9.5 | 5 of 7 |
 
@@ -41,7 +41,7 @@ This report explains how pressure is defined, how a player's performance on a si
 How to read the columns:
 - "Runs above expected" and "runs saved" compare what happened on a player's pressure balls with what an average player would have produced in exactly the same match situations (section 4).
 - A "season block" is one season in one competition, for example IPL 2024 or T20I 2024.
-- The raw numbers in these tables describe the evidence. The ranking itself comes from the opponent-adjusted model (section 5) plus the selection review (section 7).
+- The raw numbers in these tables describe the evidence. The ranking itself comes from the opponent-adjusted model (section 5) plus the evidence checks (section 7).
 
 ---
 
@@ -209,6 +209,7 @@ Where a model placement did not stand up, we changed it. Every change is listed 
 | Wanindu Hasaranga out | 10 | Barely better than average under pressure in T20Is (+0.06 runs saved per over) and no IPL in 2026. |
 | Krunal Pandya not added | 11 | No T20I pressure record to test against; death economy 10.48. |
 | Maheesh Theekshana in at 10 | 16 | Saved runs under pressure in all 9 of his season blocks: +1.56 IPL, +1.37 T20I, +1.54 in high-stakes games over 275 balls. |
+| Yashasvi Jaiswal to 8 | 6 | His T20I figure (+56.5) rests on only 37 pressure balls. His IPL record (+10.8 over 258 balls) is the weakest of the top eight, and he was flat in 2026 (−0.4). |
 | Jasprit Bumrah to 1 | 3 | The top three bowlers are a statistical tie in the model. Bumrah has the best rate (1.99 runs saved per over), the best in high-stakes games (2.43) and saved runs in every season block. |
 
 Players who were close and checked but not chosen:
@@ -227,7 +228,7 @@ We read ten public entries to this round. Most score pressure with a fixed formu
 1. **Opponents are modelled, not ignored.** Every batter and bowler is fitted jointly over the matchup network, so ratings are adjusted for who a player actually faced. Most entries compare each player with a league-average baseline.
 2. **Stakes are simulated, not assigned.** The value of a league game comes from simulating the rest of the season. A must-win group game counts like a knockout, and a dead rubber does not. Other entries use a flat bonus such as ×1.12 or +12 points for playoffs only.
 3. **Batting and bowling pressure are different numbers.** Each is the risk of losing for that side. This is why a bowler defending a small total at the death, which is Bumrah's and Narine's job, registers as high pressure even when few wickets fall.
-4. **Every name is IPL-tested.** Several entries rank T20I-only players from associate nations at the top of their lists. The IPL evidence rules keep this list to players with a real IPL pressure record, and the selection review also asks for a T20I record.
+4. **Every name is IPL-tested.** Several entries rank T20I-only players from associate nations at the top of their lists. The IPL evidence rules keep this list to players with a real IPL pressure record, and the evidence checks also ask for a T20I record.
 5. **Agreement and honesty over a single score.** A player must rank well in two different fits. Every judgement made after the model is written down with its evidence. Persistence over time is tested and reported, including where it is weak.
 
 ---
@@ -254,7 +255,7 @@ Bowling under pressure repeats moderately well. Batting under pressure is much n
 - Run-outs are credited to no one.
 - Fielding and captaincy are not measured.
 - The one-third IPL share rule was set after an early look at the rankings (section 6).
-- Four placements come from the selection review rather than straight from the model (section 7). All are listed with their evidence.
+- Five placements come from the evidence checks rather than straight from the model (section 7). All are listed with their evidence.
 
 ---
 
@@ -268,7 +269,7 @@ python src/s2_models.py      # player-blind models, cross-fitted ball values  ->
 python src/s5_main.py        # joint matchup model on all balls + eligibility -> results/eligibility_audit.csv
 python src/quick_final.py    # full-model ratings                             -> results/model_full/
 python src/pressure_only.py  # pressure-only fits and ratings                 -> results/model_pressure_only/
-python src/select_final.py   # model ranking, availability, selection review  -> results/final_*.csv
+python src/select_final.py   # model ranking, availability, evidence checks   -> results/final_*.csv
 python src/evidence.py       # evidence tables, out-of-time check, dashboard data
 ```
 
