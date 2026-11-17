@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CRUCIBLE — Most Reliable Players Under Pressure</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:16mm 15mm 16mm 15mm}
+@page cover{margin:0}
+:root{--paper:#F3EEE4;--card:#FBF8F1;--ink:#1D1B18;--ink2:#4B463E;--muted:#8A8273;--rule:#D9D0C0;--ember:#C2481A;--moss:#4D6A39;--ox:#922E37}
+*{box-sizing:border-box}
+html,body{margin:0;color:var(--ink);font:9.6pt/1.5 "IBM Plex Sans",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0}
+h2{font-size:18pt;font-weight:800;margin:0 0 4mm;display:flex;gap:4mm;align-items:baseline}
+h2 .n{color:var(--ember);font-weight:900}
+h3{font-size:11.5pt;font-weight:800;margin:5mm 0 2mm;break-after:avoid}
+h2{break-after:avoid}
+.two,table{break-inside:avoid}
+.flow{}
+p{margin:0 0 2.6mm}
+.page{page-break-after:always}
+.page:last-child{page-break-after:auto}
+section{margin-bottom:6mm}
+.avoid{break-inside:avoid}
+table{width:100%;border-collapse:collapse;margin:2mm 0 3mm;font-size:8.6pt}
+th{text-align:left;font-size:7.4pt;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1.2px solid var(--ink);padding:1.6mm 1.6mm}
+td{padding:1.4mm 1.6mm;border-bottom:.5px solid var(--rule);vertical-align:top}
+td.r,th.r{text-align:right}
+.mono{font-family:"IBM Plex Mono",monospace}
+.pos{color:var(--moss)}.neg{color:var(--ox)}
+.cover{page:cover;height:296mm;display:flex;flex-direction:column;justify-content:space-between;background:var(--paper);padding:24mm 22mm 18mm}
+.logo{font-family:Fraunces,serif;font-weight:900;font-size:58pt;line-height:.9;letter-spacing:.02em}
+.logo em{font-style:normal;color:var(--ember)}
+.kick{font-size:9pt;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2);font-weight:600;margin-top:4mm}
+.lead{font-family:Fraunces,serif;font-weight:600;font-size:21pt;line-height:1.2;margin-top:14mm;max-width:150mm}
+.lead span{color:var(--ember)}
+.links{border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr 1fr;margin-top:12mm}
+.links div{padding:4mm 0}
+.links div+div{padding-left:6mm;border-left:1px solid var(--rule)}
+.links b{display:block;font-size:7.6pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:1mm}
+.links a{color:var(--ember);font-family:"IBM Plex Mono",monospace;font-size:10pt;text-decoration:none;font-weight:500}
+.final{display:grid;grid-template-columns:1fr 1fr;gap:10mm}
+.final table td:first-child{font-family:Fraunces,serif;font-weight:900;color:var(--ember);width:9mm;font-size:11pt}
+.final table td{font-size:10pt;padding:1.6mm}
+.meta{font-size:8pt;color:var(--muted);display:flex;justify-content:space-between}
+.callout{background:var(--card);border-left:3px solid var(--ember);padding:3mm 4mm;margin:3mm 0;font-size:9.2pt}
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:3mm 0}
+.steps4 div{border-top:2px solid var(--ink);padding-top:2mm;font-size:8.6pt}
+.steps4 b{display:block;font-family:Fraunces,serif;font-size:10.5pt;margin-bottom:1mm}
+.steps4 i{font-style:normal;color:var(--ember);font-family:Fraunces,serif;font-weight:900;margin-right:1.5mm}
+code,.code{font-family:"IBM Plex Mono",monospace;font-size:8.3pt}
+code{background:#EFE9DD;padding:.3mm 1.2mm;border-radius:1mm}
+pre{background:#1D1B18;color:#EDE6D8;font-family:"IBM Plex Mono",monospace;font-size:7.6pt;line-height:1.45;padding:3.5mm 4mm;border-radius:1.5mm;margin:2mm 0 3mm;white-space:pre;overflow:hidden}
+pre .c{color:#C9A27A}
+pre .p{color:#E39A74}
+figure{margin:3mm 0 4mm;break-inside:avoid}
+figure img{width:100%;border:1px solid var(--rule);display:block}
+figcaption{font-size:8pt;color:var(--muted);margin-top:1.5mm}
+.rs{display:grid;grid-template-columns:8mm 1fr;gap:2mm 3mm;margin:2mm 0}
+.rs .k{font-family:Fraunces,serif;font-weight:900;color:var(--ember);font-size:12pt;line-height:1.1}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.small{font-size:8pt;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="page cover">
+  <div>
+    <div class="logo">CRUCIBLE<em>.</em></div>
+    <div class="kick">T20 Performance Intelligence · SupeRR Selector Season 2 · Round 1</div>
+    <div class="lead">The most reliable IPL and T20I players under pressure. <span>Pressure reveals performance. Data reveals the truth.</span></div>
+    <div class="links">
+      <div><b>Interactive dashboard</b><a href="https://likhith1253.github.io/crucible/">likhith1253.github.io/crucible</a></div>
+      <div><b>Code, data and results</b><a href="https://github.com/likhith1253/crucible">github.com/likhith1253/crucible</a></div>
+    </div>
+  </div>
+  <div class="final">
+    <div><h3>Batters</h3><table>
+      <tr><td>1</td><td>Tim David</td></tr><tr><td>2</td><td>Suryakumar Yadav</td></tr><tr><td>3</td><td>Abhishek Sharma</td></tr><tr><td>4</td><td>Phil Salt</td></tr><tr><td>5</td><td>Heinrich Klaasen</td></tr><tr><td>6</td><td>Rinku Singh</td></tr><tr><td>7</td><td>Shreyas Iyer</td></tr><tr><td>8</td><td>Yashasvi Jaiswal</td></tr><tr><td>9</td><td>Virat Kohli</td></tr><tr><td>10</td><td>Tilak Varma</td></tr></table></div>
+    <div><h3>Bowlers</h3><table>
+      <tr><td>1</td><td>Jasprit Bumrah</td></tr><tr><td>2</td><td>Josh Hazlewood</td></tr><tr><td>3</td><td>Rashid Khan</td></tr><tr><td>4</td><td>Sunil Narine</td></tr><tr><td>5</td><td>Bhuvneshwar Kumar</td></tr><tr><td>6</td><td>Kuldeep Yadav</td></tr><tr><td>7</td><td>Axar Patel</td></tr><tr><td>8</td><td>Varun Chakravarthy</td></tr><tr><td>9</td><td>Mustafizur Rahman</td></tr><tr><td>10</td><td>Maheesh Theekshana</td></tr></table></div>
+  </div>
+  <div class="meta"><span>773 matches · 184,930 deliveries · 2022–2026</span><span>Technical report</span></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="flow">
+<section>
+  <h2><span class="n">01</span>Summary</h2>
+  <p>CRUCIBLE identifies the batters and bowlers who perform most reliably in high-pressure moments of IPL and T20I cricket. Each player is measured against his own usual level and against everyone else who faced the same situations.</p>
+  <div class="steps4">
+    <div><b><i>1</i>Measure pressure</b>The win probability a side stands to lose on each ball, scaled by what the match means for the season. The top 20% of balls are pressure balls.</div>
+    <div><b><i>2</i>Judge against expectation</b>Player-blind models give the expected result of every ball from the match state alone. Players are credited only for what they add beyond it.</div>
+    <div><b><i>3</i>Adjust for opponents</b>All batters and bowlers are fitted jointly in one hierarchical model over 24,054 batter–bowler matchups.</div>
+    <div><b><i>4</i>Rank and test</b>Two converged fits, a review against the detailed evidence, and a five-method robustness check.</div>
+  </div>
+  <div class="callout"><b>Links.</b> Dashboard: <span class="mono">https://likhith1253.github.io/crucible/</span> &nbsp;·&nbsp; Repository: <span class="mono">https://github.com/likhith1253/crucible</span>. The repository contains the data, the full pipeline, every intermediate ranking and the dashboard source. Section 09 explains how to reproduce the results.</div>
+</section>
+<section class="avoid">
+  <h3>Data</h3>
+  <table>
+    <tr><td>Matches analysed</td><td>773 (353 IPL, 420 T20I)</td></tr>
+    <tr><td>Deliveries</td><td>184,930 (177,037 legal balls, 7,893 wides and no-balls)</td></tr>
+    <tr><td>Period</td><td>22 January 2022 – 1 November 2026</td></tr>
+    <tr><td>Batters / bowlers appearing</td><td>816 / 589</td></tr>
+    <tr><td>Distinct batter–bowler pairs</td><td>24,054</td></tr>
+  </table>
+  <p>From the supplied 200,999 delivery rows in 883 listed matches, the following were removed:</p>
+  <ul>
+    <li>16 listed matches with no ball-by-ball data;</li>
+    <li>34 rain-revised matches, whose revised targets do not match the ball-by-ball state;</li>
+    <li>24 no-results;</li>
+    <li>26 super-over rows;</li>
+    <li>two youth and emerging-team events.</li>
+  </ul>
+  <p>Run and wicket totals reconcile with the recorded results for 383 of 385 run margins and 388 of 389 wicket margins.</p>
+</section>
+<section>
+  <h2><span class="n">02</span>Defining pressure</h2>
+  <p>Pressure is a property of the ball, fixed before it is bowled. The same ball is a pressure ball whether it goes for six or takes a wicket, so no player can create pressure balls by playing badly.</p>
+  <h3>What the side can lose on this ball</h3>
+  <p>The win-probability and outcome models give the probability of every possible result of the next ball and the win probability that would follow each one. The <b>downside</b> of a ball for a side is the expected fall in that side's win probability, counting only the results that hurt it. It is computed separately for each side:</p>
+  <ul>
+    <li><b>Batting downside</b> is driven by wickets in hand, runs needed and balls left.</li>
+    <li><b>Bowling downside</b> is driven by the runs being defended and how close the batting side is to taking the game away.</li>
+  </ul>
+  <h3>What the match is worth</h3>
+  <table class="avoid">
+    <tr><th>Match type</th><th>Stake</th></tr>
+    <tr><td>IPL league match</td><td>Change in the team's top-four probability between winning and losing, from 3,000 simulations of the remaining fixtures</td></tr>
+    <tr><td>IPL Qualifier 1, Eliminator</td><td>0.5</td></tr>
+    <tr><td>IPL Qualifier 2, Final; other knockouts</td><td>1.0</td></tr>
+    <tr><td>T20I bilateral match</td><td>Change in the probability of winning the series, given the series score</td></tr>
+    <tr><td>Multi-team T20I event</td><td>Group and Super-4 stages simulated like the IPL league</td></tr>
+  </table>
+  <p>A league match with a stake of 0.3 or more is a <b>virtual knockout</b>: the season turns on it. Virtual and real knockouts together form the high-stakes matches. 55% of bowling pressure balls fall in high-stakes matches.</p>
+  <div class="callout"><b>pressure = downside × (1 + stake).</b> All balls are placed on one percentile scale, separately for batting and bowling. Balls in the top 20% are pressure balls. Lost causes score near zero, because little can still be lost. Pressure is not confined to the death overs: 25% of batting pressure balls are in the powerplay, 45% in the middle overs and 30% at the death.</div>
+</section>
+</div>
+
+<div class="flow">
+<section>
+  <h2><span class="n">03</span>Measuring a ball</h2>
+  <p>Four gradient-boosted models describe the situation, not the players. No batter or bowler identity is used. Each match's predictions come from models trained without that match (5-fold cross-fitting by match), so no ball is scored by a model that has seen it.</p>
+  <table>
+    <tr><th>Model</th><th>Predicts</th><th>Inputs</th></tr>
+    <tr><td>Win probability, 1st innings</td><td>Batting side wins</td><td>Score, wickets, balls used</td></tr>
+    <tr><td>Win probability, 2nd innings</td><td>Batting side wins</td><td>Runs needed, balls left, wickets, required rate</td></tr>
+    <tr><td>Ball outcome</td><td>0, 1, 2, 3, 4, 6, wicket, run-out, extra</td><td>Over, wickets, competition, innings, ball in over, runs needed, required rate, batting positions and balls faced, recent wickets, partnership balls, pace or spin</td></tr>
+    <tr><td>Remaining runs</td><td>Runs still to come</td><td>Balls used, wickets, competition, batting positions, balls faced</td></tr>
+  </table>
+  <p>The inputs contain <b>no runs already scored by the batters at the crease</b>. Otherwise a batter in form would be judged against a bar raised by his own earlier boundaries.</p>
+  <table class="avoid">
+    <tr><th>Component of a ball's value</th><th>Definition</th><th>Credited to</th></tr>
+    <tr><td>Scoring</td><td>Runs off the bat minus expected runs</td><td>Batter (+), bowler (−)</td></tr>
+    <tr><td>Dismissal</td><td>Expected rest-of-innings runs after a dot ball minus after a wicket, both measured after the ball</td><td>Bowler (bowler-credited dismissals only)</td></tr>
+    <tr><td>Extras</td><td>Wide and no-ball runs minus expectation</td><td>Bowler</td></tr>
+  </table>
+</section>
+<section>
+  <h2><span class="n">04</span>The matchup model</h2>
+  <p>Raw "runs above expected" still flatters a batter who faced weak bowling. CRUCIBLE therefore fits <b>every batter and every bowler jointly</b> over the network of matchups, so each player's rating is relative to the opponents he actually met.</p>
+  <table>
+    <tr><th>Component</th><th>Form</th></tr>
+    <tr><td>Scoring</td><td>runs = expected + batter effect − bowler effect + match effect; each player's effect can change as pressure rises</td></tr>
+    <tr><td>Dismissal</td><td>Same structure on the log-odds of a bowler-credited wicket</td></tr>
+    <tr><td>Extras</td><td>Bowler-only effect on wide and no-ball runs</td></tr>
+    <tr><td>Competition-season levels</td><td>A separate baseline for every season of the IPL and of T20Is; the IPL–T20I strength gap is estimated, not assumed</td></tr>
+    <tr><td>Match effects</td><td>Pitch and conditions on the day</td></tr>
+    <tr><td>Partial pooling</td><td>Player effects share a common distribution; small samples are pulled towards the average</td></tr>
+  </table>
+  <p>Estimation used approximate restricted maximum likelihood (EM with a Laplace approximation). Every fit ran until parameters changed by less than 10⁻⁴. Ratings are evaluated on a common set of 2,000 real pressure situations, and players are ranked by the cautious <b>10th percentile</b> of their posterior rating.</p>
+  <p>Two fits are run:</p>
+  <ul>
+    <li><b>Full model:</b> all balls, with pressure as a slope.</li>
+    <li><b>Pressure-only model:</b> pressure balls only.</li>
+  </ul>
+  <p>The model ranking averages a player's rank in the two fits.</p>
+</section>
+<section class="avoid">
+  <h2><span class="n">05</span>Eligibility</h2>
+  <table>
+    <tr><th>Requirement</th><th class="r">Batters</th><th class="r">Bowlers</th></tr>
+    <tr><td>Effective pressure evidence (pressure-weighted, match-clustered)</td><td class="r">≥ 15</td><td class="r">≥ 25</td></tr>
+    <tr><td>Pressure balls</td><td class="r">≥ 100</td><td class="r">≥ 100</td></tr>
+    <tr><td>Seasons with pressure balls · different opponents</td><td class="r">≥ 2 · ≥ 5</td><td class="r">≥ 2 · ≥ 5</td></tr>
+    <tr><td>Effective IPL pressure evidence · IPL share of evidence</td><td class="r">≥ 5 · ≥ 1/3</td><td class="r">≥ 8.3 · ≥ 1/3</td></tr>
+    <tr><td>T20 played in the 12 months to 1 Nov 2026</td><td class="r">Yes</td><td class="r">Yes</td></tr>
+  </table>
+  <p>68 batters and 58 bowlers meet the evidence requirements. The full audit is in <code>results/eligibility_audit.csv</code>.</p>
+</section>
+</div>
+
+<div class="flow">
+<section>
+  <h2><span class="n">06</span>From model ranking to final list</h2>
+  <p>The model ranking was reviewed against each player's detailed evidence:</p>
+  <ul>
+    <li>record in the IPL and in T20Is separately;</li>
+    <li>high-stakes matches;</li>
+    <li>survival under pressure;</li>
+    <li>pressure workload;</li>
+    <li>recent form;</li>
+    <li>season-to-season consistency.</li>
+  </ul>
+  <p>Each adjustment is recorded with its evidence in <code>src/select_final.py</code>.</p>
+  <table>
+    <tr><th>Adjustment</th><th class="r">Model rank</th><th>Evidence</th></tr>
+    <tr><td>Andre Russell not ranked</td><td class="r">4</td><td>No T20 since July 2025.</td></tr>
+    <tr><td>Nicholas Pooran not ranked</td><td class="r">10</td><td>17.6 runs per 100 pressure balls below expected in T20Is, over 197 balls.</td></tr>
+    <tr><td>Cameron Green not ranked</td><td class="r">11</td><td>Below expected in T20Is (−3.5 per 100) and in high-stakes matches (−1.4).</td></tr>
+    <tr><td>Dewald Brevis not ranked</td><td class="r">12</td><td>106 pressure balls: too little evidence.</td></tr>
+    <tr><td>Abhishek Sharma placed 3rd</td><td class="r">5</td><td>+49.8 per 100 in high-stakes matches (Salt +11.2) on 308 pressure balls; second only to Suryakumar Yadav on match-winning performances.</td></tr>
+    <tr><td>Yashasvi Jaiswal placed 8th</td><td class="r">6</td><td>T20I figure rests on 37 pressure balls; IPL record (+10.8 per 100) is the weakest of the top eight.</td></tr>
+    <tr><td>Virat Kohli ranked 9th</td><td class="r">13</td><td>Hardest batter to dismiss under pressure (one dismissal every 47 pressure balls) over 424 balls; 8th in the pressure-only model; top ten in four of five methods.</td></tr>
+    <tr><td>Tilak Varma ranked 10th</td><td class="r">16</td><td>Heaviest pressure workload of any eligible batter (495 balls, 266 in high-stakes matches, where he is above expected).</td></tr>
+    <tr><td>Jasprit Bumrah placed 1st</td><td class="r">3</td><td>Top three tied in the model. Best runs-saved rate (1.99 per over), best high-stakes record (2.43), positive in every season, best death economy of any eligible pace bowler (7.40).</td></tr>
+    <tr><td>Wanindu Hasaranga not ranked</td><td class="r">10</td><td>+0.06 runs saved per over in T20Is; no IPL in the latest season.</td></tr>
+    <tr><td>Krunal Pandya not ranked</td><td class="r">11</td><td>No T20I pressure record; death economy 10.48.</td></tr>
+    <tr><td>Maheesh Theekshana ranked 10th</td><td class="r">16</td><td>Saved runs in all 9 season blocks: +1.56 IPL, +1.37 T20I, +1.54 in high-stakes matches; 3rd on the reliability index.</td></tr>
+  </table>
+</section>
+<section>
+  <h2><span class="n">07</span>Robustness: five ways to rank</h2>
+  <p>Each method below is a single fixed rule applied to every available eligible player:</p>
+  <ul>
+    <li><b>Model:</b> the opponent-adjusted ranking from the two fits.</li>
+    <li><b>Reliability index:</b> five equally weighted percentiles (model rating, dependability, high-stakes value, consistency, workload).</li>
+    <li><b>WPA:</b> win probability added above expectation on pressure balls.</li>
+    <li><b>Match-winning:</b> stake-weighted count of won matches where the player moved win probability by 20 points or more.</li>
+    <li><b>Process + outcome:</b> the average of the model and match-winning ranks.</li>
+  </ul>
+  <div class="two">
+  <table>
+    <tr><th>Batter</th><th class="r">Model</th><th class="r">Rel.</th><th class="r">WPA</th><th class="r">Win</th><th class="r">P+O</th><th class="r">Top 10</th></tr>
+    <tr><td>Tim David</td><td class="r">1</td><td class="r">2</td><td class="r">1</td><td class="r">11</td><td class="r">5</td><td class="r">4/5</td></tr>
+    <tr><td>Suryakumar Yadav</td><td class="r">2</td><td class="r">2</td><td class="r">2</td><td class="r">1</td><td class="r">1</td><td class="r">5/5</td></tr>
+    <tr><td>Abhishek Sharma</td><td class="r">4</td><td class="r">8</td><td class="r">25</td><td class="r">2</td><td class="r">2</td><td class="r">4/5</td></tr>
+    <tr><td>Phil Salt</td><td class="r">3</td><td class="r">6</td><td class="r">18</td><td class="r">8</td><td class="r">3</td><td class="r">4/5</td></tr>
+    <tr><td>Heinrich Klaasen</td><td class="r">6</td><td class="r">11</td><td class="r">30</td><td class="r">25</td><td class="r">15</td><td class="r">1/5</td></tr>
+    <tr><td>Rinku Singh</td><td class="r">7</td><td class="r">4</td><td class="r">3</td><td class="r">22</td><td class="r">13</td><td class="r">3/5</td></tr>
+    <tr><td>Shreyas Iyer</td><td class="r">8</td><td class="r">5</td><td class="r">4</td><td class="r">3</td><td class="r">3</td><td class="r">5/5</td></tr>
+    <tr><td>Yashasvi Jaiswal</td><td class="r">5</td><td class="r">1</td><td class="r">9</td><td class="r">14</td><td class="r">8</td><td class="r">4/5</td></tr>
+    <tr><td>Virat Kohli</td><td class="r">12</td><td class="r">7</td><td class="r">8</td><td class="r">6</td><td class="r">6</td><td class="r">4/5</td></tr>
+    <tr><td>Tilak Varma</td><td class="r">15</td><td class="r">9</td><td class="r">16</td><td class="r">9</td><td class="r">11</td><td class="r">2/5</td></tr>
+  </table>
+  <table>
+    <tr><th>Bowler</th><th class="r">Model</th><th class="r">Rel.</th><th class="r">WPA</th><th class="r">Win</th><th class="r">P+O</th><th class="r">Top 10</th></tr>
+    <tr><td>Jasprit Bumrah</td><td class="r">3</td><td class="r">2</td><td class="r">10</td><td class="r">14</td><td class="r">8</td><td class="r">4/5</td></tr>
+    <tr><td>Josh Hazlewood</td><td class="r">1</td><td class="r">4</td><td class="r">1</td><td class="r">2</td><td class="r">1</td><td class="r">5/5</td></tr>
+    <tr><td>Rashid Khan</td><td class="r">2</td><td class="r">1</td><td class="r">2</td><td class="r">1</td><td class="r">1</td><td class="r">5/5</td></tr>
+    <tr><td>Sunil Narine</td><td class="r">4</td><td class="r">8</td><td class="r">9</td><td class="r">27</td><td class="r">12</td><td class="r">3/5</td></tr>
+    <tr><td>Bhuvneshwar Kumar</td><td class="r">5</td><td class="r">5</td><td class="r">18</td><td class="r">8</td><td class="r">5</td><td class="r">4/5</td></tr>
+    <tr><td>Kuldeep Yadav</td><td class="r">6</td><td class="r">7</td><td class="r">6</td><td class="r">5</td><td class="r">4</td><td class="r">5/5</td></tr>
+    <tr><td>Axar Patel</td><td class="r">7</td><td class="r">6</td><td class="r">5</td><td class="r">3</td><td class="r">3</td><td class="r">5/5</td></tr>
+    <tr><td>Varun Chakravarthy</td><td class="r">8</td><td class="r">9</td><td class="r">3</td><td class="r">19</td><td class="r">11</td><td class="r">3/5</td></tr>
+    <tr><td>Mustafizur Rahman</td><td class="r">9</td><td class="r">10</td><td class="r">21</td><td class="r">7</td><td class="r">6</td><td class="r">4/5</td></tr>
+    <tr><td>Maheesh Theekshana</td><td class="r">16</td><td class="r">3</td><td class="r">19</td><td class="r">24</td><td class="r">16</td><td class="r">1/5</td></tr>
+  </table>
+  </div>
+  <p><b>Seven batters and seven bowlers on the final lists are top ten under at least four of the five methods.</b> Where methods disagree, the reason is visible:</p>
+  <ul>
+    <li>Narine and Varun provide steady control rather than single decisive spells.</li>
+    <li>Klaasen's strength is opponent-adjusted scoring rate.</li>
+    <li>Theekshana and Bumrah are the only eligible bowlers who saved runs in every season block.</li>
+  </ul>
+</section>
+</div>
+
+<div class="flow">
+<section>
+  <h2><span class="n">08</span>Evidence and validation</h2>
+  <h3>Batters <span class="small">— runs above expected per 100 pressure balls</span></h3>
+  <table>
+    <tr><th>#</th><th>Player</th><th class="r">Balls</th><th class="r">SR</th><th class="r">Balls/out</th><th class="r">Overall</th><th class="r">IPL</th><th class="r">T20I</th><th class="r">High-stakes</th><th class="r">Seasons +</th></tr>
+    <tr><td>1</td><td>Tim David</td><td class="r">327</td><td class="r">194</td><td class="r">20.4</td><td class="r pos">+45.9</td><td class="r pos">+42.1</td><td class="r pos">+49.0</td><td class="r pos">+39.2</td><td class="r">8/10</td></tr>
+    <tr><td>2</td><td>Suryakumar Yadav</td><td class="r">506</td><td class="r">180</td><td class="r">18.7</td><td class="r pos">+28.6</td><td class="r pos">+13.8</td><td class="r pos">+43.5</td><td class="r pos">+27.2</td><td class="r">8/10</td></tr>
+    <tr><td>3</td><td>Abhishek Sharma</td><td class="r">308</td><td class="r">169</td><td class="r">15.4</td><td class="r pos">+25.4</td><td class="r neg">−3.2</td><td class="r pos">+78.3</td><td class="r pos">+49.8</td><td class="r">5/8</td></tr>
+    <tr><td>4</td><td>Phil Salt</td><td class="r">233</td><td class="r">175</td><td class="r">19.4</td><td class="r pos">+32.7</td><td class="r pos">+54.6</td><td class="r pos">+18.9</td><td class="r pos">+11.2</td><td class="r">8/9</td></tr>
+    <tr><td>5</td><td>Heinrich Klaasen</td><td class="r">227</td><td class="r">166</td><td class="r">16.2</td><td class="r pos">+18.7</td><td class="r pos">+18.8</td><td class="r pos">+18.5</td><td class="r pos">+18.9</td><td class="r">5/7</td></tr>
+    <tr><td>6</td><td>Rinku Singh</td><td class="r">204</td><td class="r">175</td><td class="r">29.1</td><td class="r pos">+19.8</td><td class="r pos">+10.5</td><td class="r pos">+46.4</td><td class="r pos">+58.7</td><td class="r">7/8</td></tr>
+    <tr><td>7</td><td>Shreyas Iyer</td><td class="r">315</td><td class="r">167</td><td class="r">31.5</td><td class="r pos">+19.0</td><td class="r pos">+26.6</td><td class="r neg">−1.8</td><td class="r pos">+12.9</td><td class="r">4/7</td></tr>
+    <tr><td>8</td><td>Yashasvi Jaiswal</td><td class="r">295</td><td class="r">161</td><td class="r">32.8</td><td class="r pos">+16.5</td><td class="r pos">+10.8</td><td class="r pos">+56.5</td><td class="r pos">+40.4</td><td class="r">5/7</td></tr>
+    <tr><td>9</td><td>Virat Kohli</td><td class="r">424</td><td class="r">150</td><td class="r">47.1</td><td class="r neg">−2.8</td><td class="r neg">−1.4</td><td class="r neg">−7.3</td><td class="r neg">−0.2</td><td class="r">3/7</td></tr>
+    <tr><td>10</td><td>Tilak Varma</td><td class="r">495</td><td class="r">141</td><td class="r">26.1</td><td class="r neg">−4.9</td><td class="r neg">−10.8</td><td class="r pos">+0.7</td><td class="r pos">+2.4</td><td class="r">4/9</td></tr>
+  </table>
+  <p class="small">Kohli and Tilak are placed on dependability and workload. They score close to expectation, rarely get out, and carry the heaviest pressure loads in the data.</p>
+  <h3>Bowlers <span class="small">— runs saved per over against expectation</span></h3>
+  <table>
+    <tr><th>#</th><th>Player</th><th class="r">Balls</th><th class="r">Econ</th><th class="r">Saved</th><th class="r">IPL</th><th class="r">T20I</th><th class="r">High-stakes</th><th class="r">Death econ</th><th class="r">Seasons +</th></tr>
+    <tr><td>1</td><td>Jasprit Bumrah</td><td class="r">329</td><td class="r">7.93</td><td class="r pos">1.99</td><td class="r pos">2.05</td><td class="r pos">1.83</td><td class="r pos">2.43</td><td class="r">7.40</td><td class="r">8/8</td></tr>
+    <tr><td>2</td><td>Josh Hazlewood</td><td class="r">330</td><td class="r">8.36</td><td class="r pos">1.45</td><td class="r pos">0.60</td><td class="r pos">3.00</td><td class="r pos">1.05</td><td class="r">9.85</td><td class="r">5/7</td></tr>
+    <tr><td>3</td><td>Rashid Khan</td><td class="r">488</td><td class="r">7.30</td><td class="r pos">1.49</td><td class="r pos">1.26</td><td class="r pos">1.86</td><td class="r pos">1.39</td><td class="r">8.41</td><td class="r">9/10</td></tr>
+    <tr><td>4</td><td>Sunil Narine</td><td class="r">256</td><td class="r">7.59</td><td class="r pos">1.16</td><td class="r pos">1.16</td><td class="r">–</td><td class="r">–</td><td class="r">6.12</td><td class="r">4/5</td></tr>
+    <tr><td>5</td><td>Bhuvneshwar Kumar</td><td class="r">427</td><td class="r">9.08</td><td class="r pos">1.12</td><td class="r pos">1.74</td><td class="r neg">−0.51</td><td class="r pos">0.36</td><td class="r">10.09</td><td class="r">6/7</td></tr>
+    <tr><td>6</td><td>Kuldeep Yadav</td><td class="r">333</td><td class="r">7.98</td><td class="r pos">1.00</td><td class="r pos">1.59</td><td class="r neg">−0.38</td><td class="r pos">0.53</td><td class="r">8.45</td><td class="r">6/9</td></tr>
+    <tr><td>7</td><td>Axar Patel</td><td class="r">433</td><td class="r">8.00</td><td class="r pos">0.67</td><td class="r pos">0.82</td><td class="r pos">0.53</td><td class="r pos">0.11</td><td class="r">9.15</td><td class="r">7/10</td></tr>
+    <tr><td>8</td><td>Varun Chakravarthy</td><td class="r">349</td><td class="r">7.82</td><td class="r pos">0.74</td><td class="r pos">1.35</td><td class="r neg">−0.61</td><td class="r neg">−0.28</td><td class="r">8.55</td><td class="r">6/8</td></tr>
+    <tr><td>9</td><td>Mustafizur Rahman</td><td class="r">355</td><td class="r">9.26</td><td class="r pos">0.75</td><td class="r pos">0.54</td><td class="r pos">0.85</td><td class="r pos">0.81</td><td class="r">8.91</td><td class="r">6/9</td></tr>
+    <tr><td>10</td><td>Maheesh Theekshana</td><td class="r">397</td><td class="r">7.59</td><td class="r pos">1.43</td><td class="r pos">1.56</td><td class="r pos">1.37</td><td class="r pos">1.54</td><td class="r">8.22</td><td class="r">9/9</td></tr>
+  </table>
+  <h3>Stability over time</h3>
+  <p>Pressure performance was measured on 2022–24 and compared with 2025–26, for players with 60 or more pressure balls in each period.</p>
+  <ul>
+    <li><b>Bowlers:</b> rank correlation 0.30; 79% of the best quarter stayed above the median.</li>
+    <li><b>Batters:</b> rank correlation 0.05; 71% of the best quarter stayed above the median.</li>
+  </ul>
+  <p>Bowling under pressure repeats, and batting is noisier. That is why the method relies on long records, partial pooling, two fits and a cross-method check. From about fifth place onwards, neighbouring positions should be read as a band rather than a strict order.</p>
+  <h3>Limitations</h3>
+  <ul>
+    <li>The data contains no T20 World Cup matches.</li>
+    <li>Net run rate is not modelled in the stake simulation.</li>
+    <li>Rain-revised matches are excluded.</li>
+    <li>Run-outs are credited to neither player.</li>
+    <li>Fielding and captaincy are not measured.</li>
+    <li>The one-third IPL share rule was set after an initial review of the rankings.</li>
+  </ul>
+</section>
+</div>
+
+<!-- DASHBOARD TOUR -->
+<div class="page" style="break-before:page">
+  <h2><span class="n">09</span>The dashboard</h2>
+  <p>The dashboard is live at <span class="mono">https://likhith1253.github.io/crucible/</span>. It is a single static page built with D3, with a Batters/Bowlers switch at the top that drives every section. The screenshots below are taken from the live build.</p>
+  <figure><img src="img/bat_hero.jpg"><figcaption>Masthead with the Batters/Bowlers switch and the dataset at a glance.</figcaption></figure>
+  <figure><img src="img/bat_s1.jpg"><figcaption><b>01 The ten.</b> The ranked list, with season-by-season bars for each player. Clicking a player opens his profile: a petal chart of seven measures, with each petal showing his percentile among eligible players; key statistics; and his record against the other list.</figcaption></figure>
+</div>
+<div class="page">
+  <figure><img src="img/bowl_s1.jpg"><figcaption><b>01 The ten — bowlers.</b> The same view with the switch on Bowlers.</figcaption></figure>
+  <figure><img src="img/bat_s2.jpg"><figcaption><b>02 The field.</b> Every eligible player as a dot. Choosing Overall, IPL, T20I, High stakes, Chasing/Defending or 2025–26 moves the dots to their new positions.</figcaption></figure>
+</div>
+<div class="page">
+  <figure><img src="img/bat_s3.jpg"><figcaption><b>03 From model to list.</b> Each line follows a player from the full-model rank, through the pressure-only and combined ranks, to the final list.</figcaption></figure>
+  <figure><img src="img/bat_s4.jpg"><figcaption><b>04 Head to head.</b> Every meeting between a listed batter and a listed bowler. Circle size is balls faced; ember marks a batter above expected and charcoal a bowler on top.</figcaption></figure>
+</div>
+<div class="page">
+  <figure><img src="img/bat_s5.jpg"><figcaption><b>05 Where pressure lives.</b> The over-by-over pressure clock for each innings, and the chase heat map by overs and wickets down.</figcaption></figure>
+  <figure><img src="img/bat_s6.jpg"><figcaption><b>06 Does it last?</b> The out-of-time stability check.</figcaption></figure>
+</div>
+
+<!-- REPRODUCE -->
+<div class="page">
+  <h2><span class="n">10</span>Reproducing the results</h2>
+  <p>Everything needed is in the public repository: the supplied data, the pipeline and every output. The steps below rebuild the results from the raw files.</p>
+  <figure><img src="img/github.jpg"><figcaption>The repository at github.com/likhith1253/crucible: <code>data/</code> (supplied files), <code>src/</code> (pipeline), <code>results/</code> (all rankings and evidence), <code>dashboard/</code> (site source), <code>REPORT.md</code>.</figcaption></figure>
+  <h3>Requirements</h3>
+  <p>Python 3.10 or later with numpy, pandas, pyarrow, scipy, scikit-learn and PyTorch (versions pinned in <code>requirements.txt</code>). A CUDA GPU is optional and speeds up the joint-model fit.</p>
+  <div class="rs avoid">
+    <div class="k">1</div><div><b>Get the code and install dependencies</b>
+<pre><span class="p">$</span> git clone https://github.com/likhith1253/crucible.git
+<span class="p">$</span> cd crucible
+<span class="p">$</span> pip install -r requirements.txt</pre></div>
+    <div class="k">2</div><div><b>Prepare the data and match stakes</b> <span class="small">→ cleaned deliveries, pre-ball match states, stakes from season simulation (written to <code>work/</code>)</span>
+<pre><span class="p">$</span> python src/s1_data.py
+<span class="p">$</span> python src/s1b_stakes.py</pre></div>
+    <div class="k">3</div><div><b>Fit the player-blind models</b> <span class="small">→ cross-fitted win probability, outcome and expected-runs values for every ball</span>
+<pre><span class="p">$</span> python src/s2_models.py</pre></div>
+    <div class="k">4</div><div><b>Fit the joint matchup model</b> <span class="small">→ <code>results/eligibility_audit.csv</code>; the slowest step, and it uses a GPU if one is present</span>
+<pre><span class="p">$</span> python src/s5_main.py</pre></div>
+    <div class="k">5</div><div><b>Rate players under both fits</b> <span class="small">→ <code>results/model_full/</code>, <code>results/model_pressure_only/</code></span>
+<pre><span class="p">$</span> python src/quick_final.py
+<span class="p">$</span> python src/pressure_only.py</pre></div>
+    <div class="k">6</div><div><b>Build the final lists, evidence and robustness check</b> <span class="small">→ <code>results/final_*.csv</code>, <code>results/evidence_*.csv</code>, <code>results/method_comparison_*.csv</code>, <code>dashboard/data.js</code></span>
+<pre><span class="p">$</span> python src/select_final.py
+<span class="p">$</span> python src/evidence.py
+<span class="p">$</span> python src/robustness.py</pre></div>
+    <div class="k">7</div><div><b>Open the dashboard</b> <span class="small">→ open <code>dashboard/index.html</code> in a browser, or serve it locally</span>
+<pre><span class="p">$</span> python -m http.server 8000 -d dashboard      <span class="c"># then visit http://localhost:8000</span></pre></div>
+  </div>
+</div>
+<div class="page">
+  <h3>Expected output of step 6</h3>
+  <p>Running <code>select_final.py</code> prints the final lists with each player's model ranks:</p>
+<pre><span class="p">$</span> python src/select_final.py
+ rank                 name  model_rank  full_model_rank  pressure_only_rank
+    1            Tim David           1              1.0                 1.0
+    2     Suryakumar Yadav           2              2.0                 2.0
+    3      Abhishek Sharma           5              3.0                10.0
+    4            Phil Salt           3              4.0                 7.0
+    5     Heinrich Klaasen           7              5.0                12.0
+    6          Rinku Singh           8             11.0                 6.0
+    7         Shreyas Iyer           9             13.0                 4.0
+    8     Yashasvi Jaiswal           6             10.0                 3.0
+    9          Virat Kohli          13             17.0                 8.0
+   10 Namboori Tilak Varma          16             12.0                20.0
+ rank               name  model_rank  full_model_rank  pressure_only_rank
+    1     Jasprit Bumrah           3              4.0                 4.0
+    2     Josh Hazlewood           1              2.0                 2.0
+    3        Rashid Khan           2              3.0                 1.0
+    4       Sunil Narine           4              1.0                 8.0
+    5  Bhuvneshwar Kumar           5              6.0                 3.0
+    6      Kuldeep Yadav           6              5.0                 6.0
+    7         Axar Patel           7              8.0                 7.0
+    8 Varun Chakravarthy           8             10.0                 5.0
+    9  Mustafizur Rahman           9              7.0                12.0
+   10 Maheesh Theekshana          16             24.0                10.0</pre>
+  <p><code>robustness.py</code> ends by listing the players who are top ten under at least four of the five methods:</p>
+<pre><span class="p">$</span> python src/robustness.py
+...
+core (top 10 in >= 4 of 5 methods): ['Tim David', 'Suryakumar Yadav', 'Abhishek Sharma', 'Phil Salt',
+                                     'Shreyas Iyer', 'Yashasvi Jaiswal', 'Virat Kohli']
+...
+core (top 10 in >= 4 of 5 methods): ['Jasprit Bumrah', 'Josh Hazlewood', 'Rashid Khan', 'Bhuvneshwar Kumar',
+                                     'Kuldeep Yadav', 'Axar Patel', 'Mustafizur Rahman', 'Wanindu Hasaranga']</pre>
+  <h3>Output files</h3>
+  <table>
+    <tr><th>File</th><th>Contents</th></tr>
+    <tr><td><code>results/final_batters.csv</code>, <code>final_bowlers.csv</code></td><td>Final top ten with model ranks and the basis for each placement</td></tr>
+    <tr><td><code>results/model_ranking_*.csv</code></td><td>Model ranking of every eligible player, with availability</td></tr>
+    <tr><td><code>results/evidence_*.csv</code></td><td>Pressure evidence for every eligible player: IPL, T20I, high-stakes, chases or defending, recent form, consistency</td></tr>
+    <tr><td><code>results/method_comparison_*.csv</code></td><td>Ranks under all five methods</td></tr>
+    <tr><td><code>results/eligibility_audit.csv</code></td><td>Every candidate, the evidence measures and the reason for any exclusion</td></tr>
+    <tr><td><code>results/out_of_time_check.json</code>, <code>data_integrity.json</code></td><td>Stability check and data audit</td></tr>
+  </table>
+  <h3>What sets the approach apart</h3>
+  <table>
+    <tr><th></th><th>Typical approach</th><th>CRUCIBLE</th></tr>
+    <tr><td>Pressure</td><td>Weighted formula of required rate, wickets, phase</td><td>Expected loss of win probability on the ball</td></tr>
+    <tr><td>Match importance</td><td>Flat playoff bonus</td><td>Season simulation; virtual knockouts</td></tr>
+    <tr><td>Batting vs bowling</td><td>One shared score</td><td>Separate measure for each side</td></tr>
+    <tr><td>Opposition</td><td>Ignored</td><td>Joint model over 24,054 matchups</td></tr>
+    <tr><td>IPL vs T20I</td><td>Fixed weights</td><td>Competition-season levels estimated from data</td></tr>
+    <tr><td>Robustness</td><td>One formula</td><td>Two fits, evidence review, five-method comparison</td></tr>
+  </table>
+  <p class="small">All random steps use the fixed seed 20260718. The joint model, the stakes simulation and the cross-fitting are deterministic given that seed.</p>
+</div>
+</body>
+</html>
