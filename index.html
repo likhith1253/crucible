@@ -6,510 +6,414 @@
 <title>CRUCIBLE | Pressure Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <style>
 :root{
-  --bg:#0A0F1C; --bg-2:#0D1424; --card:#111A2D; --card-2:#16213A; --line:#1F2C47; --line-2:#18233A;
-  --ink:#ECEFF6; --ink-2:#B9C2D3; --muted:#7D89A1;
-  --blue:#5B86E5; --blue-deep:#2C4E9E; --pink:#D9578F; --gold:#D8B25E;
-  --pos:#5DB891; --neg:#DE7C6C; --grey:#3A4763;
-  --ease:cubic-bezier(.2,.7,.2,1);
+  --paper:#F3EEE4; --paper-2:#EBE4D6; --card:#FBF8F1; --ink:#1D1B18; --ink-2:#4B463E; --muted:#8A8273; --rule:#D9D0C0; --rule-2:#E6DFD1;
+  --ember:#C2481A; --ember-2:#E39A74; --ember-soft:#F3DCCD; --moss:#4D6A39; --ox:#922E37; --sand:#C8BDAA; --char:#3A342D;
+  --serif:"Fraunces",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,system-ui,sans-serif;font-feature-settings:"tnum" 1;-webkit-font-smoothing:antialiased}
-body{background:radial-gradient(1200px 600px at 85% -10%,rgba(44,78,158,.28),transparent 60%),radial-gradient(900px 500px at -10% 10%,rgba(217,87,143,.10),transparent 60%),var(--bg);background-attachment:fixed}
-.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
-/* header */
-header{padding:34px 0 0}
-.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
-.brand h1{font-family:"Playfair Display",Georgia,serif;font-weight:800;font-size:46px;letter-spacing:.08em;margin:0;line-height:1}
-.brand h1 span{color:var(--gold)}
-.brand .sub{margin-top:10px;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--blue);font-weight:600}
-.brand .tag{margin-top:10px;color:var(--ink-2);font-size:15px;max-width:520px}
-.facts{display:flex;gap:28px;flex-wrap:wrap}
-.fact b{display:block;font-size:26px;font-weight:600;letter-spacing:-.01em}
-.fact span{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-nav.tabs{display:flex;gap:6px;margin-top:30px;border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
-nav.tabs::-webkit-scrollbar{display:none}
-nav.tabs button{appearance:none;border:0;background:none;color:var(--muted);font:600 12.5px Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:14px 18px;position:relative;cursor:pointer;transition:color .25s}
-nav.tabs button:after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s var(--ease)}
-nav.tabs button[aria-selected=true]{color:var(--ink)}
-nav.tabs button[aria-selected=true]:after{transform:scaleX(1)}
-nav.tabs button:hover{color:var(--ink-2)}
-main{padding:30px 0 70px}
-.view{animation:fade .5s var(--ease)}
-@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-section{margin-bottom:24px}
-.grid{display:grid;gap:22px}
-.g-main{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
-.g-2{grid-template-columns:1fr 1fr}
-.g-3{grid-template-columns:repeat(3,1fr)}
-.card{background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid var(--line);border-radius:16px;padding:22px 24px;min-width:0}
-.card h2{font-size:15px;font-weight:600;margin:0 0 3px;letter-spacing:.01em}
-.card .note{font-size:12.5px;color:var(--muted);margin:0 0 16px}
-.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
-/* podium */
-.pod{position:relative;overflow:hidden;padding:20px 22px 18px;display:flex;gap:18px;align-items:center}
-.pod .rank{position:absolute;right:14px;top:-14px;font-family:"Playfair Display",serif;font-size:96px;font-weight:800;color:rgba(255,255,255,.04);line-height:1}
-.pod .who{flex:1;min-width:0}
-.pod .who b{display:block;font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pod .who span{font-size:12px;color:var(--muted)}
-.pod .big{font-size:24px;font-weight:600;margin-top:6px}
-.pod.first{border-color:rgba(216,178,94,.45)}
-.ring circle{fill:none;stroke-width:7}
-.ring .track{stroke:var(--line)}
-.ring .arc{stroke-linecap:round;transition:stroke-dashoffset 1.4s var(--ease)}
-/* table */
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse}
-th{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:right;padding:8px 8px;border-bottom:1px solid var(--line)}
-th:nth-child(1),th:nth-child(2){text-align:left}
-td{padding:10px 8px;border-bottom:1px solid var(--line-2);text-align:right;white-space:nowrap}
-td:nth-child(1){text-align:left;width:34px;color:var(--muted);font-weight:600}
-td:nth-child(2){text-align:left}
-tbody tr{cursor:pointer;transition:background .2s}
-tbody tr:hover{background:rgba(91,134,229,.06)}
-tbody tr.sel{background:rgba(91,134,229,.12);box-shadow:inset 3px 0 0 var(--gold)}
-tbody tr{opacity:0;transform:translateX(-6px);animation:rowin .5s var(--ease) forwards}
-@keyframes rowin{to{opacity:1;transform:none}}
-.pname{font-weight:600}
-.pbasis{display:block;font-size:11px;color:var(--muted)}
-.pbasis.j{color:var(--gold)}
-.bar{position:relative;height:6px;background:var(--line);border-radius:3px;width:150px}
-.bar i{position:absolute;top:0;bottom:0;border-radius:3px;transition:width 1.1s var(--ease),left 1.1s var(--ease)}
-.bar .z{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--muted);left:50%}
-.val{display:inline-block;min-width:46px;font-weight:600}
-.pos{color:var(--pos)} .neg{color:var(--neg)}
-.blocks{display:inline-flex;gap:3px;vertical-align:middle}
-.blocks i{width:8px;height:16px;border-radius:2px;display:block;transform:scaleY(0);transform-origin:bottom;animation:grow .6s var(--ease) forwards}
-@keyframes grow{to{transform:scaleY(1)}}
-/* detail */
-.dhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.dname{font-family:"Playfair Display",Georgia,serif;font-size:28px;font-weight:700;margin:2px 0 2px;line-height:1.15}
-.drk{color:var(--muted);font-size:12.5px}
-.chip{font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
-.chip.j{border-color:rgba(216,178,94,.5);color:var(--gold)}
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 6px}
-.kpi{background:rgba(255,255,255,.02);border:1px solid var(--line-2);border-radius:10px;padding:10px 12px}
-.kpi b{display:block;font-size:18px;font-weight:600}
-.kpi span{font-size:11px;color:var(--muted)}
-.basis{font-size:12.5px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid var(--line-2);color:var(--ink-2);margin-top:14px}
-.basis b{color:var(--ink)}
-.basis.j{border-color:rgba(216,178,94,.3)}
-.legend{display:flex;gap:16px;font-size:12px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
-.legend i.sq{border-radius:2px}
-svg text{font-family:Inter,sans-serif}
-.dot{transform-box:fill-box;transform-origin:center;transform:scale(0);animation:pop .55s var(--ease) forwards}
-@keyframes pop{to{transform:scale(1)}}
-.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.3s var(--ease) forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.fadein{opacity:0;animation:fo .8s var(--ease) forwards}
-@keyframes fo{to{opacity:1}}
-.radar-shape{transform-box:view-box;transform-origin:center;transform:scale(.05);opacity:0;transition:transform 1s var(--ease),opacity .6s}
-.radar-shape.on{transform:scale(1);opacity:1}
-.sbar{transform-box:fill-box;transform:scaleY(0);transition:transform .9s var(--ease)}
-.sbar.up{transform-origin:bottom}.sbar.down{transform-origin:top}
-.sbar.on{transform:scaleY(1)}
-/* excluded */
-.ex{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.exc{border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.015)}
-.exc b{font-weight:600}
-.exc .m{font-size:11.5px;color:var(--muted)}
-.exc p{margin:6px 0 0;font-size:12.5px;color:var(--ink-2)}
-/* network */
-.net-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px}
-.link{fill:none;transition:opacity .25s,stroke-width .25s}
-.node text{font-size:12.5px;font-weight:500;cursor:pointer;transition:fill .2s}
-.node circle{transition:r .25s}
-.side h3{font-family:"Playfair Display",serif;font-size:22px;margin:0 0 2px}
-.hh{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line-2);font-size:13px}
-.hh span:last-child{font-weight:600}
-/* method */
-.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;position:relative}
-.step{position:relative;padding-top:46px}
-.step .n{position:absolute;top:0;left:0;width:34px;height:34px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-weight:700;font-size:13px;background:var(--card)}
-.step h3{font-size:13.5px;margin:0 0 6px;font-weight:600}
-.step p{margin:0;font-size:12.5px;color:var(--muted)}
-.steps:before{content:"";position:absolute;top:17px;left:17px;right:17px;height:1px;background:linear-gradient(90deg,var(--gold),var(--blue));transform:scaleX(0);transform-origin:left;animation:line 1.6s .2s var(--ease) forwards}
-@keyframes line{to{transform:scaleX(1)}}
-.stat{font-size:34px;font-weight:600;line-height:1.1;letter-spacing:-.01em}
-.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:14px}
-.statrow span{font-size:12px;color:var(--muted)}
-.cell{transform-box:fill-box;transform-origin:center;transform:scale(.4);opacity:0;animation:cell .6s var(--ease) forwards}
-@keyframes cell{to{transform:scale(1);opacity:1}}
-.pbar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}
-.pbar i{display:block;height:100%;border-radius:5px;width:0;transition:width 1.2s var(--ease)}
-footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:12px}
-@media (max-width:1020px){.g-main,.g-2,.net-wrap{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.steps:before{display:none}}
-@media (max-width:820px){.hide-s{display:none}.g-3{grid-template-columns:1fr}}
-@media (max-width:640px){.wrap{padding:0 16px}.brand h1{font-size:36px}.facts{gap:18px}.fact b{font-size:20px}.kpis{grid-template-columns:repeat(2,1fr)}.bar{width:80px}.steps{grid-template-columns:1fr}.statrow{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.dot,.cell,tbody tr,.blocks i,.fadein{opacity:1;transform:none}.draw{stroke-dashoffset:0;stroke-dasharray:none!important}.steps:before{transform:none}.radar-shape,.sbar{transform:none;opacity:1}}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+.num{font-family:var(--mono);font-feature-settings:"tnum" 1}
+/* masthead */
+.mast{border-bottom:2px solid var(--ink);padding:26px 0 18px;position:sticky;top:0;background:rgba(243,238,228,.94);backdrop-filter:blur(6px);z-index:20}
+.mast .row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.logo{font-family:var(--serif);font-weight:900;font-size:44px;letter-spacing:.02em;line-height:.9;margin:0}
+.logo em{font-style:normal;color:var(--ember)}
+.kicker{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-2);font-weight:600;margin-top:8px}
+.toggle{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;padding:3px;gap:2px}
+.toggle button{appearance:none;border:0;background:none;font:600 13px var(--sans);padding:8px 20px;border-radius:999px;cursor:pointer;color:var(--ink);transition:background .3s,color .3s}
+.toggle button.on{background:var(--ink);color:var(--paper)}
+.sec-nav{display:flex;gap:22px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.sec-nav a{color:var(--muted);text-decoration:none;transition:color .2s}
+.sec-nav a:hover{color:var(--ember)}
+/* intro */
+.intro{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;padding:46px 0 34px;border-bottom:1px solid var(--rule)}
+.intro h2{font-family:var(--serif);font-weight:600;font-size:34px;line-height:1.15;margin:0;letter-spacing:-.01em}
+.intro h2 span{color:var(--ember)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+.fact{padding:14px 0 6px;border-bottom:1px solid var(--rule)}
+.fact:not(:nth-child(3n+1)){padding-left:18px;border-left:1px solid var(--rule)}
+.fact b{display:block;font-family:var(--serif);font-weight:800;font-size:30px;line-height:1.1}
+.fact span{font-size:12px;color:var(--muted)}
+/* sections */
+.sec{padding:52px 0 18px;border-bottom:1px solid var(--rule)}
+.sec-h{display:grid;grid-template-columns:90px 1fr;gap:12px;margin-bottom:26px}
+.sec-h .n{font-family:var(--serif);font-weight:900;font-size:46px;line-height:.9;color:var(--ember)}
+.sec-h h3{font-family:var(--serif);font-weight:800;font-size:28px;margin:0;line-height:1.1}
+.sec-h p{margin:6px 0 0;color:var(--ink-2);max-width:760px}
+/* the ten */
+.ten{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:start}
+.row10{display:grid;grid-template-columns:56px 1fr 110px 132px;align-items:center;gap:12px;padding:12px 10px;border-top:1px solid var(--rule);cursor:pointer;position:relative;transition:background .25s}
+.row10:last-child{border-bottom:1px solid var(--rule)}
+.row10:hover{background:var(--paper-2)}
+.row10.on{background:var(--card)}
+.row10.on:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ember)}
+.row10 .rk{font-family:var(--serif);font-weight:900;font-size:34px;line-height:1;color:var(--sand);transition:color .25s}
+.row10.on .rk,.row10:hover .rk{color:var(--ember)}
+.row10 .nm{font-weight:600;font-size:16px}
+.row10 .sub{font-size:12px;color:var(--muted)}
+.row10 .mv{font-family:var(--mono);font-size:17px;text-align:right}
+.spark{display:block}
+.profile{position:sticky;top:130px;background:var(--card);border:1px solid var(--rule);padding:24px 26px;border-radius:4px}
+.profile .pk{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.profile h4{font-family:var(--serif);font-weight:800;font-size:32px;margin:4px 0 0;line-height:1.05}
+.profile .big{display:flex;align-items:baseline;gap:10px;margin:8px 0 2px}
+.profile .big b{font-family:var(--serif);font-weight:900;font-size:44px;line-height:1;color:var(--ember)}
+.profile .big span{font-size:12.5px;color:var(--ink-2);max-width:200px;line-height:1.3}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);margin-top:6px}
+.pgrid div{padding:10px 0;border-bottom:1px solid var(--rule-2)}
+.pgrid div:not(:nth-child(3n+1)){padding-left:12px;border-left:1px solid var(--rule-2)}
+.pgrid b{display:block;font-family:var(--mono);font-size:15px;font-weight:500}
+.pgrid span{font-size:11.5px;color:var(--muted)}
+.mini-h{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:18px 0 6px}
+.h2h{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px dotted var(--rule)}
+.h2h span:last-child{font-family:var(--mono)}
+.pos{color:var(--moss)} .neg{color:var(--ox)}
+/* controls */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chips button{appearance:none;border:1px solid var(--rule);background:var(--card);font:500 13px var(--sans);padding:7px 14px;border-radius:999px;cursor:pointer;color:var(--ink-2);transition:all .25s}
+.chips button:hover{border-color:var(--ink)}
+.chips button.on{background:var(--ember);border-color:var(--ember);color:#fff}
+.cap{font-size:12.5px;color:var(--muted)}
+.legend{display:flex;gap:20px;font-size:12.5px;color:var(--ink-2);flex-wrap:wrap;margin-top:6px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+svg text{font-family:var(--sans)}
+.axis text{fill:var(--muted);font-size:11px;font-family:var(--mono)}
+.axis line,.axis path{stroke:var(--rule)}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);font-size:12.5px;padding:9px 12px;border-radius:3px;max-width:260px;opacity:0;transition:opacity .15s;z-index:50;line-height:1.4}
+.tip b{font-family:var(--serif);font-size:15px;display:block;margin-bottom:2px}
+.big-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink)}
+.big-stats div{padding:16px 18px 10px 0}
+.big-stats div+div{padding-left:18px;border-left:1px solid var(--rule)}
+.big-stats b{display:block;font-family:var(--serif);font-weight:900;font-size:48px;line-height:1}
+.big-stats span{font-size:12.5px;color:var(--ink-2)}
+.prose{color:var(--ink-2);max-width:620px}
+footer{padding:28px 0 40px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media (max-width:980px){.ten,.two,.intro{grid-template-columns:1fr}.profile{position:static}.sec-nav{display:none}}
+@media (max-width:640px){.wrap{padding:0 16px}.logo{font-size:34px}.row10{grid-template-columns:40px 1fr 80px}.row10 .spark{display:none}.sec-h{grid-template-columns:1fr}.big-stats{grid-template-columns:1fr}.big-stats div+div{border-left:0;padding-left:0}.facts{grid-template-columns:1fr 1fr}.fact:not(:nth-child(3n+1)){padding-left:0;border-left:0}.intro h2{font-size:26px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <div class="hero">
-      <div class="brand">
-        <h1>CRUCIBLE<span>.</span></h1>
-        <div class="sub">T20 Performance Intelligence</div>
-        <div class="tag">Separating proven performers from pressure-tested performers.</div>
-      </div>
-      <div class="facts" id="facts"></div>
+<div class="tip" id="tip"></div>
+<div class="mast">
+  <div class="wrap row">
+    <div>
+      <h1 class="logo">CRUCIBLE<em>.</em></h1>
+      <div class="kicker">T20 Performance Intelligence</div>
     </div>
-    <nav class="tabs" role="tablist">
-      <button role="tab" data-tab="bat" aria-selected="true">Batters</button>
-      <button role="tab" data-tab="bowl" aria-selected="false">Bowlers</button>
-      <button role="tab" data-tab="net" aria-selected="false">Matchups</button>
-      <button role="tab" data-tab="method" aria-selected="false">Method</button>
-    </nav>
+    <nav class="sec-nav"><a href="#s1">The ten</a><a href="#s2">The field</a><a href="#s3">Model to list</a><a href="#s4">Head to head</a><a href="#s5">Pressure map</a></nav>
+    <div class="toggle" id="toggle"><button data-s="bat" class="on">Batters</button><button data-s="bowl">Bowlers</button></div>
   </div>
-</header>
+</div>
 
-<main class="wrap" id="main"></main>
-<footer><div class="wrap">CRUCIBLE · Pressure reveals performance. Data reveals the truth. · IPL and T20I ball-by-ball, <span id="span"></span></div></footer>
+<main class="wrap">
+  <section class="intro">
+    <h2>Pressure reveals performance. <span>Data reveals the truth.</span></h2>
+    <div class="facts" id="facts"></div>
+  </section>
 
-<template id="t-players">
-  <div class="view">
-    <section class="grid g-3" id="podium"></section>
-    <section class="grid g-main">
-      <div class="card">
-        <h2 id="list-title"></h2>
-        <p class="note" id="list-note"></p>
-        <div class="tw"><table id="list"></table></div>
-      </div>
-      <div class="card" id="detail"></div>
-    </section>
-    <section class="grid g-2">
-      <div class="card">
-        <h2>Do both models agree?</h2>
-        <p class="note">Full-model rank against pressure-only rank. On the dashed line, both fits rank a player the same.</p>
-        <div id="agree"></div>
-        <div class="legend"><span><i style="background:var(--gold)"></i>Final ten</span><span><i style="background:var(--grey)"></i>Top-30 pool</span></div>
-      </div>
-      <div class="card">
-        <h2>IPL and T20I, side by side</h2>
-        <p class="note" id="split-note"></p>
-        <div id="split"></div>
-        <div class="legend"><span><i style="background:var(--gold)"></i>Final ten</span><span><i style="background:var(--grey)"></i>Top-30 pool</span><span>Size: pressure balls</span></div>
-      </div>
-    </section>
-    <section class="card">
-      <h2>Left out, and why</h2>
-      <p class="note">Players the model placed in or near the top ten who are not on the list.</p>
-      <div class="ex" id="excluded"></div>
-    </section>
-  </div>
-</template>
+  <section class="sec" id="s1">
+    <div class="sec-h"><div class="n">01</div><div><h3 id="t1"></h3><p id="p1"></p></div></div>
+    <div class="ten">
+      <div id="list"></div>
+      <aside class="profile" id="profile"></aside>
+    </div>
+  </section>
 
-<template id="t-net">
-  <div class="view">
-    <section class="card">
-      <h2>Head to head: the final twenty</h2>
-      <p class="note">Every meeting between a listed batter and a listed bowler with at least six balls. Line width shows balls faced. Blue: the batter scored above expected. Pink: the bowler held him below it. Hover a name.</p>
-      <div class="net-wrap">
-        <div id="net"></div>
-        <div class="side" id="netside"></div>
-      </div>
-      <div class="legend"><span><i class="sq" style="background:var(--blue)"></i>Batter above expected</span><span><i class="sq" style="background:var(--pink)"></i>Bowler on top</span></div>
-    </section>
-  </div>
-</template>
+  <section class="sec" id="s2">
+    <div class="sec-h"><div class="n">02</div><div><h3>The field</h3><p id="p2"></p></div></div>
+    <div class="chips" id="metrics"></div>
+    <div id="field"></div>
+    <div class="legend"><span><i style="background:var(--ember)"></i>Final ten</span><span><i style="background:transparent;border:1.5px solid var(--sand)"></i>Other eligible players</span><span>Size: pressure balls</span></div>
+  </section>
 
-<template id="t-method">
-  <div class="view">
-    <section class="card">
-      <h2>How a ranking is built</h2>
-      <p class="note">From ball-by-ball data to two lists of ten.</p>
-      <div class="steps">
-        <div class="step"><div class="n">1</div><h3>Expected outcome</h3><p>Player-blind models give each ball's win probability and expected result from the match state alone.</p></div>
-        <div class="step"><div class="n">2</div><h3>Pressure</h3><p>What the side could lose on the ball, scaled by what the match means for the season. The top 20% of balls are pressure balls.</p></div>
-        <div class="step"><div class="n">3</div><h3>Matchup network</h3><p>All batters and bowlers are fitted together, so every rating is adjusted for who was actually faced.</p></div>
-        <div class="step"><div class="n">4</div><h3>Two converged fits</h3><p>A full model and a pressure-only model. A player ranks high only when both agree.</p></div>
-        <div class="step"><div class="n">5</div><h3>Selection review</h3><p>Availability, IPL and T20I record, sample size. Every change from model order is listed.</p></div>
-      </div>
-    </section>
-    <section class="grid g-2">
-      <div class="card">
-        <h2>Where batting pressure sits in a chase</h2>
-        <p class="note">Share of second-innings balls that are pressure balls for the batter.</p>
+  <section class="sec" id="s3">
+    <div class="sec-h"><div class="n">03</div><div><h3>From model to list</h3><p>Each line follows one player from his rank in the full model and the pressure-only model, to the combined model rank, to the final list. Hover a line.</p></div></div>
+    <div id="bump"></div>
+    <div class="legend"><span><i style="background:var(--ember)"></i>In the final ten</span><span><i style="background:var(--sand)"></i>Ranked high by the model, not selected</span></div>
+  </section>
+
+  <section class="sec" id="s4">
+    <div class="sec-h"><div class="n">04</div><div><h3>Head to head</h3><p>Every meeting between a listed batter and a listed bowler, all balls. Circle size is balls faced. Ember: the batter scored above expected. Charcoal: the bowler kept him below it.</p></div></div>
+    <div id="matrix"></div>
+  </section>
+
+  <section class="sec" id="s5">
+    <div class="sec-h"><div class="n">05</div><div><h3>Where pressure lives</h3><p id="p5"></p></div></div>
+    <div class="two">
+      <div><div id="clock"></div><div class="legend" style="justify-content:center"><span><i style="background:var(--char)"></i>First innings</span><span><i style="background:var(--ember)"></i>Second innings</span></div></div>
+      <div>
+        <div class="mini-h" style="margin-top:0">Batting pressure in a chase, by overs and wickets down</div>
         <div id="heat"></div>
+        <p class="cap">Share of second-innings balls that are pressure balls for the batter. Lost causes score near zero: little is left to lose.</p>
       </div>
-      <div class="card">
-        <h2>Pressure balls by phase</h2>
-        <p class="note">A powerplay collapse or a stalled middle phase counts, not only the death overs.</p>
-        <div id="phase"></div>
-        <div class="legend"><span><i class="sq" style="background:var(--blue)"></i>Batting pressure</span><span><i class="sq" style="background:var(--pink)"></i>Bowling pressure</span></div>
-      </div>
-    </section>
-    <section class="grid g-2">
-      <div class="card">
-        <h2>Does it hold up over time?</h2>
-        <p class="note">Measured on 2022–24, checked on 2025–26 (players with 60+ pressure balls in each period).</p>
-        <div id="oot"></div>
-      </div>
-      <div class="card">
-        <h2>Virtual knockouts</h2>
-        <p class="note">Stakes come from simulating the rest of each season, 3,000 times per match.</p>
-        <div id="stakes"></div>
-      </div>
-    </section>
-  </div>
-</template>
+    </div>
+  </section>
+
+  <section class="sec" id="s6">
+    <div class="sec-h"><div class="n">06</div><div><h3>Does it last?</h3><p>Pressure performance measured on 2022–24, then checked on 2025–26 for players with 60 or more pressure balls in each period.</p></div></div>
+    <div class="big-stats" id="oot"></div>
+    <p class="prose">Bowling under pressure repeats. Batting under pressure is much noisier from one period to the next, which is why the lists lean on long records and on agreement between two separate model fits rather than one strong season.</p>
+  </section>
+</main>
+<footer class="wrap"><span>CRUCIBLE · IPL and T20I ball-by-ball, <span id="span"></span></span><span>Pressure reveals performance. Data reveals the truth.</span></footer>
 
 <script src="data.js"></script>
 <script>
-const D = window.CRUCIBLE, NS = "http://www.w3.org/2000/svg";
-const fmt = (v, d = 1, sign = true) => v == null ? "–" : (sign && v > 0 ? "+" : "") + Number(v).toFixed(d);
+const D = window.CRUCIBLE, tip = d3.select("#tip");
+const fmt = (v, d = 1, s = true) => v == null ? "–" : (s && v > 0 ? "+" : "") + (+v).toFixed(d);
 const cls = v => v == null ? "" : v > 0 ? "pos" : v < 0 ? "neg" : "";
-function el(tag, a = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; }
-function txt(parent, x, y, s, a = {}) { const t = el("text", Object.assign({x, y}, a), parent); t.textContent = s; return t; }
-const svgBox = (host, W, H) => { const s = el("svg", {viewBox: `0 0 ${W} ${H}`, width: "100%"}); host.appendChild(s); return s; };
-const later = (f, ms = 30) => setTimeout(f, ms);
-function countUp(node, to, dec = 0, suffix = "", ms = 1200) {
-  const t0 = performance.now();
-  const step = t => { const p = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - p, 3); node.textContent = (to * e).toFixed(dec) + suffix; if (p < 1) requestAnimationFrame(step); };
-  requestAnimationFrame(step);
-}
+const C = { ember: "#C2481A", ember2: "#E39A74", moss: "#4D6A39", ox: "#922E37", sand: "#C8BDAA", char: "#3A342D", ink: "#1D1B18", muted: "#8A8273", rule: "#D9D0C0", paper: "#F3EEE4", card: "#FBF8F1" };
+const last = n => n.split(" ").slice(-1)[0];
+function showTip(e, html) { tip.html(html).style("opacity", 1).style("left", Math.min(e.clientX + 14, innerWidth - 280) + "px").style("top", (e.clientY + 14) + "px"); }
+const hideTip = () => tip.style("opacity", 0);
 
 const CFG = {
-  bat: {
-    title: "Most reliable batters under pressure", main: "vs_expected", mainLabel: "Runs above expected", d: 1,
-    note: "Runs above expected per 100 pressure balls, against an average batter in exactly the same situations.",
-    cols: [["pressure_balls", "Balls", 0, false], ["pressure_sr", "SR", 0, false]],
-    kpis: [["pressure_sr", "Pressure strike rate", 0, false], ["balls_per_dismissal", "Balls per dismissal", 1, false], ["pressure_balls", "Pressure balls", 0, false],
-           ["high_stakes_vs_expected", "High-stakes games", 1, true], ["chase_vs_expected", "In chases", 1, true], ["recent_vs_expected", "2025–26", 1, true]],
-    radar: [["vs_expected", "Overall"], ["ipl_vs_expected", "IPL"], ["t20i_vs_expected", "T20I"], ["high_stakes_vs_expected", "High stakes"], ["chase_vs_expected", "Chases"], ["recent_vs_expected", "2025–26"], ["cons", "Consistency"]],
-    ipl: "ipl_vs_expected", t20i: "t20i_vs_expected", unit: "per 100 balls", ext: [-40, 120], ticks: [-40, 0, 40, 80, 120], sScale: 40,
-    seasonUnit: "Runs above expected per 100 pressure balls",
-    splitNote: "Runs above expected per 100 pressure balls in each competition. Shaded: above expected in both."
-  },
-  bowl: {
-    title: "Most reliable bowlers under pressure", main: "runs_saved_per_over", mainLabel: "Runs saved / over", d: 2,
-    note: "Runs saved per over against an average bowler in exactly the same situations, extras included.",
-    cols: [["pressure_balls", "Balls", 0, false], ["pressure_economy", "Econ", 2, false]],
-    kpis: [["pressure_economy", "Pressure economy", 2, false], ["dot_pct", "Dot balls %", 1, false], ["death_economy", "Death-over economy", 2, false],
-           ["high_stakes_saved", "High-stakes games", 2, true], ["defending_saved", "Defending a target", 2, true], ["recent_saved", "2025–26", 2, true]],
-    radar: [["runs_saved_per_over", "Overall"], ["ipl_saved", "IPL"], ["t20i_saved", "T20I"], ["high_stakes_saved", "High stakes"], ["defending_saved", "Defending"], ["death_inv", "Death overs"], ["cons", "Consistency"]],
-    ipl: "ipl_saved", t20i: "t20i_saved", unit: "per over", ext: [-1.5, 3.5], ticks: [-1, 0, 1, 2, 3], sScale: 2.5,
-    seasonUnit: "Runs saved per over under pressure",
-    splitNote: "Runs saved per over under pressure in each competition. Shaded: better than average in both."
-  }
+  bat: { title: "The ten most reliable batters", main: "vs_expected", d: 1, unit: "runs above expected per 100 pressure balls",
+    intro: "Ranked on runs scored above what an average batter would score in exactly the same pressure situations, adjusted for the bowlers faced.",
+    metrics: [["vs_expected", "Overall", "pressure_balls"], ["ipl_vs_expected", "IPL", "ipl_balls"], ["t20i_vs_expected", "T20I", "t20i_balls"], ["high_stakes_vs_expected", "High stakes", "high_stakes_balls"], ["chase_vs_expected", "Chasing", "chase_balls"], ["recent_vs_expected", "2025–26", "recent_balls"]],
+    stats: [["pressure_sr", "Pressure strike rate", 0, 0], ["balls_per_dismissal", "Balls per dismissal", 1, 0], ["pressure_balls", "Pressure balls", 0, 0], ["ipl_vs_expected", "IPL", 1, 1], ["t20i_vs_expected", "T20I", 1, 1], ["high_stakes_vs_expected", "High stakes", 1, 1]],
+    petals: [["vs_expected", "Overall"], ["ipl_vs_expected", "IPL"], ["t20i_vs_expected", "T20I"], ["high_stakes_vs_expected", "High stakes"], ["chase_vs_expected", "Chasing"], ["recent_vs_expected", "Recent"], ["cons", "Consistency"]],
+    p2: "All 68 eligible batters. Pick a measure and watch the field rearrange: the best are those who stay on the right whatever the measure.",
+    p5: "Share of balls in each over that count as pressure for the batting side. In a chase pressure is everywhere; setting a total, it builds late." },
+  bowl: { title: "The ten most reliable bowlers", main: "runs_saved_per_over", d: 2, unit: "runs saved per over against expectation",
+    intro: "Ranked on runs saved per over against what an average bowler would concede in exactly the same pressure situations, adjusted for the batters faced.",
+    metrics: [["runs_saved_per_over", "Overall", "pressure_balls"], ["ipl_saved", "IPL", "ipl_balls"], ["t20i_saved", "T20I", "t20i_balls"], ["high_stakes_saved", "High stakes", "high_stakes_balls"], ["defending_saved", "Defending", "defending_balls"], ["recent_saved", "2025–26", "recent_balls"]],
+    stats: [["pressure_economy", "Pressure economy", 2, 0], ["dot_pct", "Dot balls %", 1, 0], ["death_economy", "Death economy", 2, 0], ["ipl_saved", "IPL", 2, 1], ["t20i_saved", "T20I", 2, 1], ["high_stakes_saved", "High stakes", 2, 1]],
+    petals: [["runs_saved_per_over", "Overall"], ["ipl_saved", "IPL"], ["t20i_saved", "T20I"], ["high_stakes_saved", "High stakes"], ["defending_saved", "Defending"], ["death_inv", "Death overs"], ["cons", "Consistency"]],
+    p2: "All 58 eligible bowlers. Pick a measure and watch the field rearrange: the best are those who stay on the right whatever the measure.",
+    p5: "Share of balls in each over that count as pressure for the bowling side. Defending a total, pressure is high from the first over." }
 };
 ["bat", "bowl"].forEach(s => [...D[s].pool, ...D[s].final].forEach(p => { p.cons = p.season_blocks ? p.season_blocks_positive / p.season_blocks : null; p.death_inv = p.death_economy == null ? null : -p.death_economy; }));
-let side = "bat", selected = 0;
+let side = "bat", sel = 0, metric = 0;
 
+/* ---------- facts ---------- */
 function facts() {
-  const f = D.facts, items = [[f.matches, 0, "", "Matches"], [f.deliveries / 1000, 1, "k", "Deliveries"], [f.matchups / 1000, 1, "k", "Batter–bowler pairs"], [f.eligible_batters + f.eligible_bowlers, 0, "", "Players rated"]];
-  const host = document.getElementById("facts");
-  host.innerHTML = items.map(i => `<div class="fact"><b>0</b><span>${i[3]}</span></div>`).join("");
-  host.querySelectorAll("b").forEach((b, i) => countUp(b, items[i][0], items[i][1], items[i][2]));
-  document.getElementById("span").textContent = f.first.slice(0, 4) + "–" + f.last.slice(0, 4);
+  const f = D.facts, items = [[f.matches, 0, "", "matches"], [f.deliveries / 1000, 1, "k", "deliveries"], [f.matchups / 1000, 1, "k", "batter–bowler pairs"],
+    [f.ipl_matches, 0, "", "IPL matches"], [f.t20i_matches, 0, "", "T20I matches"], [f.eligible_batters + f.eligible_bowlers, 0, "", "players rated"]];
+  d3.select("#facts").selectAll("div").data(items).join("div").attr("class", "fact").html(d => `<b class="num">0</b><span>${d[3]}</span>`)
+    .select("b").transition().duration(1400).ease(d3.easeCubicOut).tween("t", function (d) { const i = d3.interpolateNumber(0, d[0]); return t => this.textContent = i(t).toFixed(d[1]) + d[2]; });
+  d3.select("#span").text(f.first.slice(0, 4) + "–" + f.last.slice(0, 4));
 }
 
-/* ---------- players view ---------- */
-function podium() {
-  const C = CFG[side], rows = D[side].final.slice(0, 3), mx = Math.max(...D[side].pool.map(p => p[C.main] || 0));
-  const host = document.getElementById("podium");
-  host.innerHTML = rows.map((r, i) => `<div class="card pod ${i === 0 ? "first" : ""}" data-i="${i}" style="cursor:pointer">
-      <div class="rank">${r.rank}</div>
-      <svg class="ring" width="74" height="74" viewBox="0 0 74 74"><circle class="track" cx="37" cy="37" r="30"/>
-        <circle class="arc" cx="37" cy="37" r="30" stroke="${i === 0 ? "var(--gold)" : "var(--blue)"}" stroke-dasharray="188.5" stroke-dashoffset="188.5" transform="rotate(-90 37 37)" data-p="${Math.max(0, r[C.main]) / mx}"/>
-        <text x="37" y="42" text-anchor="middle" style="fill:var(--ink);font-size:15px;font-weight:600">#${r.rank}</text></svg>
-      <div class="who"><span class="eyebrow">${i === 0 ? "Most reliable" : "Rank " + r.rank}</span><b>${r.name}</b>
-        <div class="big ${cls(r[C.main])}">${fmt(r[C.main], C.d)}</div><span>${C.mainLabel.toLowerCase()} ${C.unit}</span></div></div>`).join("");
-  later(() => host.querySelectorAll(".arc").forEach(a => a.style.strokeDashoffset = 188.5 * (1 - a.dataset.p)), 80);
-  host.querySelectorAll(".pod").forEach(p => p.onclick = () => { selected = +p.dataset.i; list(false); detail(); });
+/* ---------- 01 the ten ---------- */
+function spark(svg, seasons, sc) {
+  const k = Object.keys(seasons).sort(), W = 132, H = 34, bw = W / k.length, y = d3.scaleLinear().domain([-sc, sc]).range([H, 0]).clamp(true);
+  svg.attr("viewBox", `0 0 ${W} ${H}`).attr("width", W).attr("height", H);
+  svg.append("line").attr("x1", 0).attr("x2", W).attr("y1", y(0)).attr("y2", y(0)).attr("stroke", C.rule);
+  svg.selectAll("rect").data(k).join("rect").attr("x", (d, i) => i * bw + 1.5).attr("width", bw - 3).attr("y", y(0)).attr("height", 0)
+    .attr("fill", d => seasons[d] >= 0 ? C.moss : C.ox).attr("opacity", d => d.endsWith("IPL") ? 1 : .55)
+    .transition().delay((d, i) => 200 + i * 50).duration(700).ease(d3.easeCubicOut)
+    .attr("y", d => Math.min(y(0), y(seasons[d]))).attr("height", d => Math.abs(y(seasons[d]) - y(0)));
+}
+function list() {
+  const cf = CFG[side], rows = D[side].final, sc = side === "bat" ? 50 : 3;
+  d3.select("#t1").text(cf.title); d3.select("#p1").text(cf.intro);
+  const r = d3.select("#list").selectAll(".row10").data(rows, d => d.name).join("div").attr("class", (d, i) => "row10" + (i === sel ? " on" : ""))
+    .style("opacity", 0).style("transform", "translateY(10px)")
+    .html(d => `<div class="rk">${d.rank}</div><div><div class="nm">${d.name}</div><div class="sub">${d.pressure_balls} pressure balls · ${d.season_blocks_positive}/${d.season_blocks} seasons positive</div></div>
+      <div class="mv ${cls(d[cf.main])}">${fmt(d[cf.main], cf.d)}</div><svg class="spark"></svg>`)
+    .on("click", (e, d) => { sel = rows.indexOf(d); d3.selectAll(".row10").classed("on", x => x === d); profile(); });
+  r.transition().delay((d, i) => i * 45).duration(500).style("opacity", 1).style("transform", "none");
+  r.each(function (d) { spark(d3.select(this).select("svg"), d.seasons, sc); });
+}
+function pctile(key, v) { const xs = D[side].pool.map(p => p[key]).filter(x => x != null); return v == null ? 0 : xs.filter(x => x <= v).length / xs.length; }
+function petals(host, d, cf) {
+  const W = 380, H = 300, cx = W / 2, cy = H / 2 + 4, r0 = 26, R = 112, n = cf.petals.length;
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%");
+  const a = d3.scaleBand().domain(d3.range(n)).range([0, 2 * Math.PI]).padding(.12), rr = d3.scaleLinear().domain([0, 1]).range([r0, R]);
+  const g = svg.append("g").attr("transform", `translate(${cx},${cy})`);
+  [.25, .5, .75, 1].forEach(t => g.append("circle").attr("r", rr(t)).attr("fill", "none").attr("stroke", t === .5 ? C.muted : C.rule).attr("stroke-dasharray", t === .5 ? "3 3" : null));
+  const arc = d3.arc().innerRadius(r0).startAngle((x, i) => a(i)).endAngle((x, i) => a(i) + a.bandwidth()).padAngle(.01).cornerRadius(2);
+  const vals = cf.petals.map(([k]) => Math.max(.03, pctile(k, d[k])));
+  g.selectAll("path").data(vals).join("path").attr("fill", (v) => v >= .5 ? C.ember : C.ember2).attr("opacity", .92)
+    .attr("d", (v, i) => arc.outerRadius(r0 + 1)(v, i))
+    .on("mousemove", (e, v) => { const i = vals.indexOf(v); showTip(e, `<b>${cf.petals[i][1]}</b>Better than ${Math.round(v * 100)}% of eligible ${side === "bat" ? "batters" : "bowlers"}`); }).on("mouseleave", hideTip)
+    .transition().delay((v, i) => i * 70).duration(900).ease(d3.easeBackOut.overshoot(1.2)).attrTween("d", function (v, i) { const it = d3.interpolate(r0 + 1, rr(v)); return t => arc.outerRadius(it(t))(v, i); });
+  cf.petals.forEach(([k, lab], i) => { const m = a(i) + a.bandwidth() / 2 - Math.PI / 2, x = Math.cos(m) * (R + 18), y = Math.sin(m) * (R + 18);
+    g.append("text").attr("x", x).attr("y", y + 4).attr("text-anchor", Math.abs(x) < 10 ? "middle" : x > 0 ? "start" : "end").attr("font-size", 11).attr("fill", C.muted).text(lab); });
+  g.append("text").attr("text-anchor", "middle").attr("y", 5).attr("font-family", "Fraunces").attr("font-weight", 800).attr("font-size", 16).attr("fill", C.ink).text("#" + d.rank);
+}
+function profile() {
+  const cf = CFG[side], d = D[side].final[sel], other = side === "bat" ? "bowl" : "bat";
+  const h = D.network.filter(e => (side === "bat" ? e.bat : e.bowl) === d.name).sort((a, b) => b.balls - a.balls).slice(0, 5);
+  const p = d3.select("#profile").html(`<div class="pk">Rank ${d.rank} of 10 · last match ${d.last_match}</div><h4>${d.name}</h4>
+    <div class="big"><b class="num">${fmt(d[cf.main], cf.d)}</b><span>${cf.unit}</span></div>
+    <div id="petals"></div>
+    <div class="pgrid">${cf.stats.map(s => `<div><b class="${s[3] ? cls(d[s[0]]) : ""}">${fmt(d[s[0]], s[2], !!s[3])}</b><span>${s[1]}</span></div>`).join("")}</div>
+    <div class="mini-h">Against the other list</div>
+    ${h.length ? h.map(e => { const v = side === "bat" ? e.vs_expected : -e.vs_expected; return `<div class="h2h"><span>${side === "bat" ? e.bowl : e.bat} <span class="cap">· ${e.balls} balls${e.outs ? ", " + e.outs + " out" : ""}</span></span><span class="${cls(v)}">${fmt(v, 1)}</span></div>`; }).join("") : `<div class="cap">No meetings of six balls or more.</div>`}`);
+  p.style("opacity", 0).transition().duration(400).style("opacity", 1);
+  petals(d3.select("#petals"), d, cf);
 }
 
-function blocksHTML(seasons, C, delay) {
-  return `<span class="blocks">${Object.keys(seasons).sort().map((k, j) => { const v = seasons[k];
-    return `<i title="${k}: ${fmt(v, 2)}" style="background:${v > 0 ? "var(--pos)" : "var(--neg)"};opacity:${Math.min(1, .35 + Math.abs(v) / C.sScale)};animation-delay:${delay + j * 40}ms"></i>`; }).join("")}</span>`;
+/* ---------- 02 the field ---------- */
+let fieldState = null;
+function field() {
+  const cf = CFG[side], host = d3.select("#field"); host.selectAll("*").remove();
+  d3.select("#p2").text(cf.p2);
+  d3.select("#metrics").selectAll("button").data(cf.metrics).join("button").attr("class", (d, i) => i === metric ? "on" : null).text(d => d[1])
+    .on("click", (e, d) => { metric = cf.metrics.indexOf(d); d3.selectAll("#metrics button").classed("on", x => x === d); placeField(); });
+  const W = 1180, H = 460, m = { l: 20, r: 20, t: 30, b: 40 };
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%");
+  const fin = new Set(D[side].final.map(d => d.name));
+  const nodes = D[side].pool.map(p => Object.assign({ p, fin: fin.has(p.name), r: 3.5 + Math.sqrt(p.pressure_balls) / 3.2, x: W / 2, y: H / 2 }));
+  const ax = svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`);
+  const zero = svg.append("line").attr("y1", m.t - 10).attr("y2", H - m.b).attr("stroke", C.ink).attr("stroke-dasharray", "2 4");
+  const zl = svg.append("text").attr("y", m.t - 14).attr("text-anchor", "middle").attr("font-size", 11).attr("fill", C.muted).text("average");
+  const dots = svg.append("g").selectAll("g").data(nodes).join("g").attr("transform", `translate(${W / 2},${H / 2})`).style("cursor", "pointer");
+  dots.append("circle").attr("r", d => d.r).attr("fill", d => d.fin ? C.ember : C.card).attr("stroke", d => d.fin ? C.ember : C.sand).attr("stroke-width", 1.5);
+  const labs = svg.append("g").selectAll("g").data(nodes.filter(d => d.fin)).join("g").style("pointer-events", "none");
+  labs.append("line").attr("stroke", C.ink).attr("stroke-width", .7).attr("opacity", .5);
+  labs.append("text").attr("text-anchor", "middle").attr("font-size", 11.5).attr("font-weight", 600).attr("fill", C.ink).text(d => last(d.p.name));
+  dots.on("mousemove", (e, d) => { const [k, lab, nb] = cf.metrics[metric]; showTip(e, `<b>${d.p.name}</b>${lab}: ${fmt(d.p[k], cf.d)} over ${d.p[nb]} balls<br>Model rank ${d.p.model_rank}`); })
+    .on("mouseleave", hideTip).on("click", (e, d) => { const i = D[side].final.findIndex(f => f.name === d.p.name); if (i >= 0) { sel = i; d3.selectAll(".row10").classed("on", (x, j) => j === i); profile(); document.getElementById("s1").scrollIntoView(); } });
+  fieldState = { svg, nodes, dots, ax, zero, zl, W, H, m, labs };
+  placeField(true);
+}
+function placeField(first) {
+  const cf = CFG[side], { nodes, dots, ax, zero, zl, W, H, m, labs } = fieldState, [k, , nb] = cf.metrics[metric];
+  const ok = d => d.p[k] != null && d.p[nb] >= 30, vals = nodes.filter(ok).map(d => d.p[k]);
+  const lo = d3.quantile(vals.slice().sort(d3.ascending), .02), hi = d3.quantile(vals.slice().sort(d3.ascending), .98);
+  const x = d3.scaleLinear().domain([Math.min(lo, 0), Math.max(hi, 0)]).nice().range([m.l + 30, W - m.r - 30]).clamp(true);
+  nodes.forEach(d => { d.tx = ok(d) ? x(d.p[k]) : x(0); });
+  const sim = d3.forceSimulation(nodes).force("x", d3.forceX(d => d.tx).strength(1)).force("y", d3.forceY((H - m.b + m.t + 70) / 2).strength(.02))
+    .force("c", d3.forceCollide(d => d.r + 1.2)).stop();
+  for (let i = 0; i < 260; i++) sim.tick();
+  nodes.forEach(d => { d.y = Math.max(m.t + 70 + d.r, Math.min(H - m.b - d.r - 4, d.y)); });
+  // finalist labels: stacked rows above the swarm so names never overlap, with a leader line to the dot
+  const fl = nodes.filter(d => d.fin && ok(d)).sort((a, b) => a.x - b.x), rows = [];
+  fl.forEach(d => { const w = last(d.p.name).length * 6.6 + 10; let r = 0; while ((rows[r] || []).some(([a, b]) => d.x - w / 2 < b && d.x + w / 2 > a)) r++;
+    (rows[r] = rows[r] || []).push([d.x - w / 2, d.x + w / 2]); d.ly = m.t + 52 - r * 15; });
+  labs.transition().duration(first ? 1200 : 1000).ease(d3.easeCubicInOut).style("opacity", d => ok(d) ? 1 : 0)
+    .select("text").attr("x", d => d.x).attr("y", d => d.ly);
+  labs.select("line").transition().duration(first ? 1200 : 1000).ease(d3.easeCubicInOut).attr("x1", d => d.x).attr("x2", d => d.x).attr("y1", d => d.ly + 4).attr("y2", d => d.y - d.r);
+  ax.transition().duration(900).call(d3.axisBottom(x).ticks(8).tickSize(-(H - m.b - m.t)).tickFormat(v => fmt(v, side === "bat" ? 0 : 1))).call(g => g.select(".domain").remove()).call(g => g.selectAll(".tick line").attr("stroke", C.rule).attr("stroke-dasharray", "1 4"));
+  zero.transition().duration(900).attr("x1", x(0)).attr("x2", x(0)); zl.transition().duration(900).attr("x", x(0));
+  dots.transition().delay(d => first ? Math.random() * 500 : (d.fin ? 0 : 60)).duration(first ? 1200 : 1000).ease(d3.easeCubicInOut)
+    .attr("transform", d => `translate(${d.x},${d.y})`).style("opacity", d => ok(d) ? 1 : .08);
+  dots.filter(d => d.fin).raise();
 }
 
-function list(animate = true) {
-  const C = CFG[side], rows = D[side].final;
-  document.getElementById("list-title").textContent = C.title;
-  document.getElementById("list-note").textContent = C.note;
-  const mx = Math.max(...rows.map(r => Math.abs(r[C.main])));
-  const head = `<thead><tr><th>#</th><th>Player</th>${C.cols.map(c => `<th class="hide-s">${c[1]}</th>`).join("")}<th>${C.mainLabel}</th><th class="hide-s">Seasons</th></tr></thead>`;
-  const body = rows.map((r, i) => {
-    const v = r[C.main], w = Math.abs(v) / mx * 50, judged = r.basis !== "Model order", dl = animate ? i * 55 : 0;
-    return `<tr data-i="${i}" class="${i === selected ? "sel" : ""}" style="animation-delay:${dl}ms;${animate ? "" : "opacity:1;transform:none;animation:none"}"><td>${r.rank}</td>
-      <td><span class="pname">${r.name}</span><span class="pbasis ${judged ? "j" : ""}">${judged ? "Selection review" : "Model rank " + r.model_rank}</span></td>
-      ${C.cols.map(c => `<td class="hide-s">${fmt(r[c[0]], c[2], c[3])}</td>`).join("")}
-      <td><div style="display:flex;align-items:center;gap:12px;justify-content:flex-end"><span class="val ${cls(v)}">${fmt(v, C.d)}</span>
-        <div class="bar"><i data-w="${w}" data-l="${v >= 0 ? 50 : 50 - w}" style="left:50%;width:${animate ? 0 : w}%;${animate ? "" : `left:${v >= 0 ? 50 : 50 - w}%;`}background:${v >= 0 ? "var(--pos)" : "var(--neg)"}"></i><span class="z"></span></div></div></td>
-      <td class="hide-s">${blocksHTML(r.seasons, C, animate ? 300 + i * 55 : 0)}</td></tr>`;
-  }).join("");
-  const t = document.getElementById("list"); t.innerHTML = head + "<tbody>" + body + "</tbody>";
-  if (animate) later(() => t.querySelectorAll(".bar i").forEach(b => { b.style.width = b.dataset.w + "%"; b.style.left = b.dataset.l + "%"; }), 120);
-  t.querySelectorAll("tbody tr").forEach(tr => tr.onclick = () => { selected = +tr.dataset.i; list(false); detail(); });
+/* ---------- 03 bump ---------- */
+function bump() {
+  const host = d3.select("#bump"); host.selectAll("*").remove();
+  const pool = D[side].pool, byName = n => pool.find(p => p.name === n) || {};
+  const fin = D[side].final.map(d => ({ name: d.name, ranks: [d.full_model_rank, d.pressure_only_rank, d.model_rank, d.rank], in: true }));
+  const out = D[side].excluded.map((x, i) => { const p = byName(x.name); return { name: x.name, ranks: [p.full_model_rank, p.pressure_only_rank, x.model_rank, null], in: false, oi: i }; });
+  const all = [...out, ...fin], cols = ["Full model", "Pressure-only", "Combined", "Final"], cap = 32;
+  const W = 1180, H = 520, m = { l: 40, r: 210, t: 40, b: 70 };
+  const x = d3.scalePoint().domain(d3.range(4)).range([m.l, W - m.r]), y = d3.scaleLinear().domain([1, cap]).range([m.t, H - m.b]);
+  const outY = i => H - m.b + 22 + i * 13;
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H + out.length * 13}`).attr("width", "100%");
+  cols.forEach((c, i) => { svg.append("text").attr("x", x(i)).attr("y", 18).attr("text-anchor", "middle").attr("font-size", 11).attr("letter-spacing", ".14em").attr("font-weight", 600).attr("fill", C.muted).text(c.toUpperCase());
+    svg.append("line").attr("x1", x(i)).attr("x2", x(i)).attr("y1", m.t - 10).attr("y2", H - m.b + 6).attr("stroke", C.rule); });
+  [1, 10, 20, 30].forEach(t => svg.append("text").attr("x", m.l - 14).attr("y", y(t) + 4).attr("text-anchor", "end").attr("class", "num").attr("font-size", 10.5).attr("fill", C.muted).text(t));
+  svg.append("text").attr("x", x(3) + 8).attr("y", outY(0) - 6).attr("font-size", 10.5).attr("fill", C.muted).text("Not selected");
+  const pts = d => d.ranks.map((r, i) => [x(i), r == null ? outY(d.oi) : y(Math.min(r, cap))]);
+  const line = d3.line().curve(d3.curveBumpX);
+  const g = svg.append("g");
+  const paths = g.selectAll("path").data(all).join("path").attr("d", d => line(pts(d))).attr("fill", "none")
+    .attr("stroke", d => d.in ? C.ember : C.sand).attr("stroke-width", d => d.in ? 2.6 : 1.8).attr("stroke-dasharray", d => d.in ? null : "4 4").attr("opacity", d => d.in ? .85 : .9);
+  paths.filter(d => d.in).each(function () { const L = this.getTotalLength(); d3.select(this).attr("stroke-dasharray", L).attr("stroke-dashoffset", L).transition().delay((d, i) => i * 70).duration(1400).ease(d3.easeCubicInOut).attr("stroke-dashoffset", 0); });
+  const dotsG = svg.append("g");
+  all.forEach(d => pts(d).forEach(([px, py], i) => dotsG.append("circle").datum(d).attr("cx", px).attr("cy", py).attr("r", d.in ? 4 : 3).attr("fill", d.in ? C.ember : C.card).attr("stroke", d.in ? C.ember : C.sand).attr("stroke-width", 1.5)));
+  const lab = svg.append("g").selectAll("text").data(all).join("text").attr("x", x(3) + 12).attr("y", d => (d.in ? y(d.ranks[3]) : outY(d.oi)) + 4)
+    .attr("font-size", d => d.in ? 12.5 : 11).attr("font-weight", d => d.in ? 600 : 400).attr("fill", d => d.in ? C.ink : C.muted)
+    .text(d => d.in ? `${d.ranks[3]}  ${d.name}` : d.name);
+  const hl = n => { paths.attr("opacity", d => n == null ? (d.in ? .85 : .9) : d.name === n ? 1 : .12).attr("stroke-width", d => d.name === n ? 4 : d.in ? 2.6 : 1.8);
+    dotsG.selectAll("circle").attr("opacity", d => n == null || d.name === n ? 1 : .15); lab.attr("opacity", d => n == null || d.name === n ? 1 : .25); };
+  [paths, lab].forEach(s => s.style("cursor", "pointer").on("mousemove", (e, d) => { hl(d.name);
+    showTip(e, `<b>${d.name}</b>Full model ${d.ranks[0] ?? "–"} · pressure-only ${d.ranks[1] ?? "–"}<br>Combined ${d.ranks[2]} · ${d.in ? "final rank " + d.ranks[3] : "not selected"}`); })
+    .on("mouseleave", () => { hl(null); hideTip(); }));
 }
 
-function pct(pool, key, v) { const xs = pool.map(p => p[key]).filter(x => x != null); if (v == null || !xs.length) return 0; return xs.filter(x => x <= v).length / xs.length; }
-
-function radar(host, r, C) {
-  const pool = D[side].pool, W = 400, H = 290, cx = W / 2, cy = 146, R = 100, n = C.radar.length;
-  const svg = svgBox(host, W, H), ang = i => -Math.PI / 2 + i * 2 * Math.PI / n, pt = (i, f) => [cx + Math.cos(ang(i)) * R * f, cy + Math.sin(ang(i)) * R * f];
-  [.25, .5, .75, 1].forEach(f => el("polygon", {points: C.radar.map((_, i) => pt(i, f).join(",")).join(" "), style: `fill:none;stroke:var(--line);stroke-width:1`}, svg));
-  C.radar.forEach(([k, lab], i) => { const [x, y] = pt(i, 1); el("line", {x1: cx, y1: cy, x2: x, y2: y, style: "stroke:var(--line)"}, svg);
-    const [lx, ly] = pt(i, 1.2); txt(svg, lx, ly + 4, lab, {"text-anchor": Math.abs(lx - cx) < 8 ? "middle" : lx > cx ? "start" : "end", style: "fill:var(--muted);font-size:10.5px"}); });
-  const med = C.radar.map((_, i) => pt(i, .5).join(",")).join(" ");
-  el("polygon", {points: med, style: "fill:none;stroke:var(--muted);stroke-dasharray:3 3;stroke-width:1"}, svg);
-  const vals = C.radar.map(([k]) => Math.max(.04, pct(pool, k, r[k])));
-  const g = el("g", {class: "radar-shape"}, svg);
-  el("polygon", {points: vals.map((f, i) => pt(i, f).join(",")).join(" "), style: "fill:rgba(216,178,94,.18);stroke:var(--gold);stroke-width:2;stroke-linejoin:round"}, g);
-  vals.forEach((f, i) => { const [x, y] = pt(i, f); el("circle", {cx: x, cy: y, r: 3.2, style: "fill:var(--gold)"}, g).appendChild(el("title")).textContent = `${C.radar[i][1]}: better than ${Math.round(f * 100)}% of the top-30 pool`; });
-  later(() => g.classList.add("on"), 60);
+/* ---------- 04 matrix ---------- */
+function matrix() {
+  const host = d3.select("#matrix"); host.selectAll("*").remove();
+  const bats = D.bat.final.map(d => d.name), bows = D.bowl.final.map(d => d.name), N = D.network;
+  const cell = 66, m = { l: 150, t: 120, r: 110, b: 10 }, W = m.l + cell * 10 + m.r, H = m.t + cell * 10 + m.b;
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%").style("max-width", W + "px").style("display", "block").style("margin", "0 auto");
+  const mx = d3.max(N, d => d.balls), r = d3.scaleSqrt().domain([0, mx]).range([0, cell * .46]);
+  const xg = svg.append("g"), yg = svg.append("g"), hlr = svg.append("rect").attr("fill", C.ember).attr("opacity", 0).attr("x", m.l).attr("width", cell * 10).attr("height", cell),
+    hlc = svg.append("rect").attr("fill", C.ember).attr("opacity", 0).attr("y", m.t).attr("height", cell * 10).attr("width", cell);
+  d3.range(11).forEach(i => { svg.append("line").attr("x1", m.l).attr("x2", m.l + cell * 10).attr("y1", m.t + i * cell).attr("y2", m.t + i * cell).attr("stroke", C.rule);
+    svg.append("line").attr("y1", m.t).attr("y2", m.t + cell * 10).attr("x1", m.l + i * cell).attr("x2", m.l + i * cell).attr("stroke", C.rule); });
+  const ry = bats.map((b, i) => yg.append("text").attr("x", m.l - 12).attr("y", m.t + i * cell + cell / 2 + 4).attr("text-anchor", "end").attr("font-size", 12.5).attr("font-weight", 500).attr("fill", C.ink).text(b));
+  const cx = bows.map((b, j) => xg.append("text").attr("transform", `translate(${m.l + j * cell + cell / 2},${m.t - 12}) rotate(-40)`).attr("font-size", 12.5).attr("font-weight", 500).attr("fill", C.ink).text(b));
+  svg.selectAll("circle.c").data(N).join("circle").attr("class", "c").attr("cx", d => m.l + bows.indexOf(d.bowl) * cell + cell / 2).attr("cy", d => m.t + bats.indexOf(d.bat) * cell + cell / 2)
+    .attr("r", 0).attr("fill", d => d.vs_expected >= 0 ? C.ember : C.char).attr("fill-opacity", d => .35 + .65 * Math.min(1, Math.abs(d.vs_expected) / 25)).attr("stroke", d => d.vs_expected >= 0 ? C.ember : C.char).attr("stroke-width", 1)
+    .style("cursor", "pointer")
+    .on("mousemove", (e, d) => { const i = bats.indexOf(d.bat), j = bows.indexOf(d.bowl);
+      hlr.attr("y", m.t + i * cell).attr("opacity", .07); hlc.attr("x", m.l + j * cell).attr("opacity", .07);
+      ry.forEach((t, k) => t.attr("fill", k === i ? C.ember : C.ink)); cx.forEach((t, k) => t.attr("fill", k === j ? C.ember : C.ink));
+      showTip(e, `<b>${d.bat} v ${d.bowl}</b>${d.balls} balls · ${d.runs} runs · ${d.outs} dismissal${d.outs === 1 ? "" : "s"}<br>${d.vs_expected >= 0 ? "Batter" : "Bowler"} ahead by ${Math.abs(d.vs_expected).toFixed(1)} runs against expectation`); })
+    .on("mouseleave", () => { hlr.attr("opacity", 0); hlc.attr("opacity", 0); ry.forEach(t => t.attr("fill", C.ink)); cx.forEach(t => t.attr("fill", C.ink)); hideTip(); })
+    .transition().delay((d, i) => 100 + (bats.indexOf(d.bat) + bows.indexOf(d.bowl)) * 45).duration(700).ease(d3.easeBackOut.overshoot(1.4)).attr("r", d => r(d.balls));
 }
 
-function seasonChart(host, seasons, C) {
-  const keys = Object.keys(seasons).sort(), W = 440, H = 160, m = {l: 30, r: 6, t: 8, b: 32};
-  const vals = keys.map(k => seasons[k]), mx = Math.max(...vals.map(Math.abs), C.sScale / 2) * 1.1;
-  const svg = svgBox(host, W, H), y = v => m.t + (H - m.t - m.b) / 2 - v / mx * (H - m.t - m.b) / 2, bw = (W - m.l - m.r) / keys.length;
-  el("line", {x1: m.l, x2: W - m.r, y1: y(0), y2: y(0), style: "stroke:var(--muted)"}, svg);
-  [mx * .66, -mx * .66].forEach(t => { el("line", {x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), style: "stroke:var(--line);stroke-dasharray:2 3"}, svg); txt(svg, m.l - 6, y(t) + 3, fmt(t, side === "bat" ? 0 : 1), {"text-anchor": "end", style: "fill:var(--muted);font-size:10px"}); });
-  const bars = [];
-  keys.forEach((k, i) => { const v = seasons[k], x = m.l + i * bw + bw * .22, ipl = k.endsWith("IPL");
-    const b = el("rect", {x, width: bw * .56, y: Math.min(y(0), y(v)), height: Math.max(1, Math.abs(y(v) - y(0))), rx: 3, class: "sbar " + (v >= 0 ? "up" : "down"),
-      style: `fill:${v >= 0 ? "var(--pos)" : "var(--neg)"};opacity:${ipl ? 1 : .5};transition-delay:${i * 60}ms`}, svg);
-    el("title", {}, b).textContent = `${k}: ${fmt(v, 2)}`; bars.push(b);
-    const [yr, c] = k.split("-"); txt(svg, x + bw * .28, H - 17, "'" + yr.slice(2), {"text-anchor": "middle", style: "fill:var(--ink-2);font-size:10.5px"});
-    txt(svg, x + bw * .28, H - 4, c, {"text-anchor": "middle", style: "fill:var(--muted);font-size:9px"}); });
-  later(() => bars.forEach(b => b.classList.add("on")), 60);
+/* ---------- 05 clock + heat ---------- */
+function clock() {
+  const host = d3.select("#clock"); host.selectAll("*").remove(); d3.select("#p5").text(CFG[side].p5);
+  const data = D.facts.pressure_by_over[side], W = 580, H = 580, cxy = W / 2, r1 = 70, band = 72, gap = 10;
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%").style("max-width", "540px").style("display", "block").style("margin", "0 auto");
+  const g = svg.append("g").attr("transform", `translate(${cxy},${cxy})`);
+  const a = d3.scaleBand().domain(d3.range(20)).range([0, 2 * Math.PI]).padding(.14), s = d3.scaleLinear().domain([0, .45]).range([0, band]).clamp(true);
+  [[1, r1, C.char], [2, r1 + band + gap, C.ember]].forEach(([inn, base, col]) => {
+    g.append("circle").attr("r", base).attr("fill", "none").attr("stroke", C.rule);
+    g.append("circle").attr("r", base + band).attr("fill", "none").attr("stroke", C.rule).attr("stroke-dasharray", "1 4");
+    const arc = d3.arc().innerRadius(base).startAngle((v, i) => a(i)).endAngle((v, i) => a(i) + a.bandwidth()).cornerRadius(1.5);
+    g.append("g").selectAll("path").data(data[inn]).join("path").attr("fill", col).attr("opacity", (v, i) => i >= 15 ? 1 : i >= 6 ? .8 : .62)
+      .attr("d", (v, i) => arc.outerRadius(base + .5)(v, i))
+      .on("mousemove", (e, v) => { const i = data[inn].indexOf(v); showTip(e, `<b>Over ${i + 1}, ${inn === 1 ? "first" : "second"} innings</b>${Math.round(v * 100)}% of balls are pressure balls`); }).on("mouseleave", hideTip)
+      .transition().delay((v, i) => i * 40 + (inn - 1) * 300).duration(800).ease(d3.easeCubicOut).attrTween("d", function (v, i) { const it = d3.interpolate(base + .5, base + s(v || 0)); return t => arc.outerRadius(it(t))(v, i); });
+  });
+  d3.range(20).forEach(i => { const m = a(i) + a.bandwidth() / 2 - Math.PI / 2, R = r1 + 2 * band + gap + 16;
+    g.append("text").attr("x", Math.cos(m) * R).attr("y", Math.sin(m) * R + 4).attr("text-anchor", "middle").attr("class", "num").attr("font-size", 10.5).attr("fill", [0, 5, 14, 19].includes(i) ? C.ink : C.muted).text(i + 1); });
+  [["Powerplay", 0, 6], ["Death", 15, 20]].forEach(([n, s0, s1]) => { const arc = d3.arc().innerRadius(r1 + 2 * band + gap + 30).outerRadius(r1 + 2 * band + gap + 32).startAngle(a(s0)).endAngle(a(s1 - 1) + a.bandwidth());
+    g.append("path").attr("d", arc()).attr("fill", C.muted);
+    const mid = (a(s0) + a(s1 - 1) + a.bandwidth()) / 2 - Math.PI / 2, R = r1 + 2 * band + gap + 44;
+    g.append("text").attr("x", Math.cos(mid) * R).attr("y", Math.sin(mid) * R + 4).attr("text-anchor", "middle").attr("font-size", 10.5).attr("letter-spacing", ".12em").attr("fill", C.muted).text(n.toUpperCase()); });
+  g.append("text").attr("text-anchor", "middle").attr("y", -4).attr("font-family", "Fraunces").attr("font-weight", 800).attr("font-size", 18).attr("fill", C.ink).text(side === "bat" ? "Batting" : "Bowling");
+  g.append("text").attr("text-anchor", "middle").attr("y", 16).attr("font-size", 11).attr("fill", C.muted).text("pressure by over");
 }
-
-function detail() {
-  const C = CFG[side], r = D[side].final[selected], host = document.getElementById("detail"), judged = r.basis !== "Model order";
-  host.innerHTML = `<div class="view"><div class="dhead"><div><span class="eyebrow">Rank ${r.rank}</span><p class="dname">${r.name}</p>
-      <div class="drk">Full model ${r.full_model_rank} · pressure-only ${r.pressure_only_rank} · last match ${r.last_match}</div></div>
-      <span class="chip ${judged ? "j" : ""}">${judged ? "Selection review" : "Model order"}</span></div>
-    <div id="radar"></div>
-    <div class="legend" style="justify-content:center;margin-top:-4px"><span><i style="background:var(--gold)"></i>Percentile in the top-30 pool</span><span><i style="background:transparent;border:1px dashed var(--muted)"></i>Pool median</span></div>
-    <div class="kpis">${C.kpis.map(k => `<div class="kpi"><b class="${k[3] ? cls(r[k[0]]) : ""}">${fmt(r[k[0]], k[2], k[3])}</b><span>${k[1]}</span></div>`).join("")}</div>
-    <p class="note" style="margin:14px 0 2px">${C.seasonUnit}, season by season. Solid: IPL. Light: T20I. ${r.season_blocks_positive} of ${r.season_blocks} positive.</p>
-    <div id="season"></div>
-    <div class="basis ${judged ? "j" : ""}"><b>${judged ? "Why he is here." : "Model order."}</b> ${judged ? r.basis : "Placed by the average of his two model ranks, with no adjustment."}</div></div>`;
-  radar(document.getElementById("radar"), r, C);
-  seasonChart(document.getElementById("season"), r.seasons, C);
-}
-
-function scatter(host, pts, xk, yk, o) {
-  host.innerHTML = ""; const W = 520, H = 340, m = {l: 46, r: 16, t: 14, b: 42};
-  const svg = svgBox(host, W, H), [x0, x1] = o.xd, [y0, y1] = o.yd;
-  const X = v => m.l + (v - x0) / (x1 - x0) * (W - m.l - m.r), Y = v => o.down ? m.t + (v - y0) / (y1 - y0) * (H - m.t - m.b) : H - m.b - (v - y0) / (y1 - y0) * (H - m.t - m.b);
-  if (o.zero) el("rect", {x: X(0), y: Y(y1), width: X(x1) - X(0), height: Y(0) - Y(y1), style: "fill:rgba(93,184,145,.07)"}, svg);
-  o.xt.forEach(t => { el("line", {x1: X(t), x2: X(t), y1: m.t, y2: H - m.b, style: `stroke:${o.zero && t === 0 ? "var(--muted)" : "var(--line)"};${o.zero && t === 0 ? "" : "stroke-dasharray:2 3"}`}, svg); txt(svg, X(t), H - m.b + 15, t, {"text-anchor": "middle", style: "fill:var(--muted);font-size:10.5px"}); });
-  o.yt.forEach(t => { el("line", {x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t), style: `stroke:${o.zero && t === 0 ? "var(--muted)" : "var(--line)"};${o.zero && t === 0 ? "" : "stroke-dasharray:2 3"}`}, svg); txt(svg, m.l - 7, Y(t) + 3, t, {"text-anchor": "end", style: "fill:var(--muted);font-size:10.5px"}); });
-  if (o.diag) { const d = el("line", {x1: X(x0), y1: Y(y0), x2: X(x1), y2: Y(y1), class: "draw", style: "--len:520;stroke:var(--blue);stroke-width:1.5;stroke-dasharray:520"}, svg); }
-  txt(svg, (m.l + W - m.r) / 2, H - 6, o.xl, {"text-anchor": "middle", style: "fill:var(--muted);font-size:11px"});
-  txt(svg, 13, (m.t + H - m.b) / 2, o.yl, {"text-anchor": "middle", transform: `rotate(-90 13 ${(m.t + H - m.b) / 2})`, style: "fill:var(--muted);font-size:11px"});
-  const fin = new Set(D[side].final.map(r => r.name)), placed = [];
-  [...pts].sort((a, b) => fin.has(a.name) - fin.has(b.name)).forEach((p, i) => {
-    if (p[xk] == null || p[yk] == null) return; const f = fin.has(p.name);
-    const cx = X(Math.max(x0, Math.min(x1, p[xk]))), cy = Y(Math.max(y0, Math.min(y1, p[yk]))), r = o.size ? 3 + Math.sqrt(p[o.size]) / 3.4 : (f ? 6 : 4.5);
-    const c = el("circle", {cx, cy, r, class: "dot", style: `fill:${f ? "var(--gold)" : "var(--grey)"};fill-opacity:${f ? .9 : .8};stroke:var(--bg);stroke-width:1.5;animation-delay:${200 + i * 25}ms`}, svg);
-    el("title", {}, c).textContent = `${p.name}: ${o.tip(p)}`;
-    if (f) { let ty = cy - r - 5; while (placed.some(q => Math.abs(q[0] - cx) < 62 && Math.abs(q[1] - ty) < 12)) ty -= 12; placed.push([cx, ty]);
-      txt(svg, cx, ty, p.name.split(" ").slice(-1)[0], {"text-anchor": cx > W - 70 ? "end" : cx < 90 ? "start" : "middle", class: "fadein", style: `fill:var(--ink-2);font-size:10.5px;font-weight:500;animation-delay:${700 + i * 25}ms`}); } });
-}
-
-function players() {
-  const C = CFG[side], pool = D[side].pool;
-  podium(); list(); detail();
-  scatter(document.getElementById("agree"), pool, "full_model_rank", "pressure_only_rank", {xd: [0, 42], yd: [0, 42], down: true, diag: true, xt: [1, 10, 20, 30, 40], yt: [1, 10, 20, 30, 40],
-    xl: "Full model rank", yl: "Pressure-only rank", tip: p => `full ${p.full_model_rank}, pressure-only ${p.pressure_only_rank}`});
-  document.getElementById("split-note").textContent = C.splitNote;
-  scatter(document.getElementById("split"), pool, C.ipl, C.t20i, {xd: C.ext, yd: C.ext, zero: true, xt: C.ticks, yt: C.ticks, size: "pressure_balls",
-    xl: "IPL, " + C.unit, yl: "T20I, " + C.unit, tip: p => `IPL ${fmt(p[C.ipl], 2)}, T20I ${fmt(p[C.t20i], 2)}, ${p.pressure_balls} pressure balls`});
-  document.getElementById("excluded").innerHTML = D[side].excluded.map(x => `<div class="exc"><b>${x.name}</b> <span class="m">· model rank ${x.model_rank}</span><p>${x.reason}</p></div>`).join("");
-}
-
-/* ---------- matchup network ---------- */
-function network() {
-  const N = D.network, bats = D.bat.final.map(r => r.name), bows = D.bowl.final.map(r => r.name);
-  const W = 760, H = 560, xb = 190, xw = W - 190, top = 30, step = (H - 2 * top) / 9;
-  const yb = i => top + i * step, svg = svgBox(document.getElementById("net"), W, H);
-  const mxb = Math.max(...N.map(e => e.balls)), links = [];
-  N.forEach((e, k) => { const i = bats.indexOf(e.bat), j = bows.indexOf(e.bowl), y1 = yb(i), y2 = yb(j), mid = (xb + xw) / 2;
-    const p = el("path", {d: `M${xb + 10},${y1} C${mid},${y1} ${mid},${y2} ${xw - 10},${y2}`, class: "link draw",
-      style: `--len:700;stroke:${e.vs_expected >= 0 ? "var(--blue)" : "var(--pink)"};stroke-width:${1 + 7 * e.balls / mxb};opacity:.55;animation-delay:${k * 12}ms`}, svg);
-    el("title", {}, p).textContent = `${e.bat} v ${e.bowl}: ${e.balls} balls, ${e.runs} runs, ${e.outs} out, ${fmt(e.vs_expected, 1)} runs vs expected`;
-    links.push({e, p}); });
-  const nodes = [];
-  [[bats, xb, "end", "bat"], [bows, xw, "start", "bowl"]].forEach(([names, x, anchor, s]) => names.forEach((n, i) => {
-    const g = el("g", {class: "node fadein", style: `animation-delay:${300 + i * 50}ms`}, svg);
-    el("circle", {cx: x, cy: yb(i), r: 6, style: `fill:${s === "bat" ? "var(--blue)" : "var(--pink)"};stroke:var(--bg);stroke-width:2`}, g);
-    const t = txt(g, anchor === "end" ? x - 14 : x + 14, yb(i) + 4, n, {"text-anchor": anchor, style: "fill:var(--ink-2)"});
-    nodes.push({g, t, n, s}); g.onmouseenter = () => focus(n, s); g.onclick = () => focus(n, s); }));
-  txt(svg, xb, 12, "BATTERS", {"text-anchor": "end", style: "fill:var(--muted);font-size:10.5px;letter-spacing:.14em"});
-  txt(svg, xw, 12, "BOWLERS", {"text-anchor": "start", style: "fill:var(--muted);font-size:10.5px;letter-spacing:.14em"});
-  function focus(n, s) {
-    links.forEach(({e, p}) => { const on = (s === "bat" ? e.bat : e.bowl) === n; p.style.opacity = on ? .95 : .06; });
-    nodes.forEach(o => o.t.style.fill = o.n === n ? "var(--gold)" : "var(--ink-2)");
-    const mine = N.filter(e => (s === "bat" ? e.bat : e.bowl) === n).sort((a, b) => b.balls - a.balls);
-    const tb = mine.reduce((a, e) => a + e.balls, 0), tv = mine.reduce((a, e) => a + e.vs_expected, 0), to = mine.reduce((a, e) => a + e.outs, 0);
-    const good = s === "bat" ? tv : -tv;
-    document.getElementById("netside").innerHTML = `<span class="eyebrow">${s === "bat" ? "Batter" : "Bowler"}</span><h3>${n}</h3>
-      <div class="drk" style="margin-bottom:12px">Against the other list: ${tb} balls, ${to} dismissal${to === 1 ? "" : "s"}, <span class="${cls(good)}">${fmt(good, 1)} runs ${s === "bat" ? "above expected" : "saved"}</span></div>
-      ${mine.slice(0, 8).map(e => { const v = s === "bat" ? e.vs_expected : -e.vs_expected;
-        return `<div class="hh"><span>${s === "bat" ? e.bowl : e.bat} <span style="color:var(--muted)">· ${e.balls} balls${e.outs ? ", " + e.outs + " out" : ""}</span></span><span class="${cls(v)}">${fmt(v, 1)}</span></div>`; }).join("")}`;
-  }
-  const busiest = bats.map(n => [n, N.filter(e => e.bat === n).reduce((a, e) => a + e.balls, 0)]).sort((a, b) => b[1] - a[1])[0][0];
-  later(() => focus(busiest, "bat"), 1500);
-  document.getElementById("netside").innerHTML = `<span class="eyebrow">Network</span><h3>${N.length} matchups</h3><div class="drk">${N.reduce((a, e) => a + e.balls, 0)} balls between the two lists.</div>`;
-}
-
-/* ---------- method ---------- */
 function heat() {
-  const g = D.facts.chase_pressure_grid, overs = [...new Set(g.map(c => c.overs))], wk = ["0-1", "2-3", "4-5", "6-7", "8+"];
-  const W = 540, H = 260, m = {l: 92, r: 6, t: 26, b: 6}, cw = (W - m.l - m.r) / wk.length, ch = (H - m.t - m.b) / overs.length;
-  const svg = svgBox(document.getElementById("heat"), W, H);
-  wk.forEach((w, j) => txt(svg, m.l + j * cw + cw / 2, 14, w + " wkts", {"text-anchor": "middle", style: "fill:var(--muted);font-size:11px"}));
-  overs.forEach((o, i) => { txt(svg, m.l - 10, m.t + i * ch + ch / 2 + 4, "Overs " + o, {"text-anchor": "end", style: "fill:var(--muted);font-size:11px"});
-    wk.forEach((w, j) => { const c = g.find(c => c.overs === o && c.wickets === w), v = c ? c.share : null;
-      el("rect", {x: m.l + j * cw + 2, y: m.t + i * ch + 2, width: cw - 4, height: ch - 4, rx: 6, class: "cell",
-        style: `fill:${v == null ? "var(--line-2)" : `rgba(91,134,229,${.08 + v * 1.9})`};animation-delay:${(i + j) * 60}ms`}, svg);
-      if (v != null) txt(svg, m.l + j * cw + cw / 2, m.t + i * ch + ch / 2 + 4, Math.round(v * 100) + "%", {"text-anchor": "middle", class: "fadein",
-        style: `fill:${v > .25 ? "#fff" : "var(--ink-2)"};font-size:12px;font-weight:600;animation-delay:${300 + (i + j) * 60}ms`}); }); });
+  const host = d3.select("#heat"); if (!host.select("svg").empty()) return;
+  const g0 = D.facts.chase_pressure_grid, overs = [...new Set(g0.map(c => c.overs))], wk = ["0-1", "2-3", "4-5", "6-7", "8+"];
+  const W = 540, H = 300, m = { l: 92, r: 4, t: 30, b: 4 }, cw = (W - m.l - m.r) / wk.length, ch = (H - m.t - m.b) / overs.length;
+  const col = d3.scaleLinear().domain([0, .45]).range([C.card, C.ember]).clamp(true);
+  const svg = host.append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("width", "100%");
+  wk.forEach((w, j) => svg.append("text").attr("x", m.l + j * cw + cw / 2).attr("y", 16).attr("text-anchor", "middle").attr("font-size", 11).attr("fill", C.muted).text(w + " wkts"));
+  overs.forEach((o, i) => svg.append("text").attr("x", m.l - 12).attr("y", m.t + i * ch + ch / 2 + 4).attr("text-anchor", "end").attr("font-size", 11).attr("fill", C.muted).text("Overs " + o));
+  const cells = [];
+  overs.forEach((o, i) => wk.forEach((w, j) => cells.push({ o, w, i, j, v: (g0.find(c => c.overs === o && c.wickets === w) || {}).share })));
+  const cg = svg.selectAll("g.cell").data(cells).join("g").attr("class", "cell").attr("transform", d => `translate(${m.l + d.j * cw + cw / 2},${m.t + d.i * ch + ch / 2})`);
+  cg.append("rect").attr("x", -cw / 2 + 2).attr("y", -ch / 2 + 2).attr("width", cw - 4).attr("height", ch - 4).attr("rx", 3).attr("fill", d => d.v == null ? C.paper : col(d.v))
+    .attr("stroke", d => d.v == null ? C.rule : "none").attr("stroke-dasharray", "2 3").attr("opacity", 0).attr("transform", "scale(.6)")
+    .transition().delay(d => (d.i + d.j) * 70).duration(600).ease(d3.easeCubicOut).attr("opacity", 1).attr("transform", "scale(1)");
+  cg.filter(d => d.v != null).append("text").attr("text-anchor", "middle").attr("y", 5).attr("class", "num").attr("font-size", 13).attr("fill", d => d.v > .28 ? "#fff" : C.ink).attr("opacity", 0).text(d => Math.round(d.v * 100) + "%")
+    .transition().delay(d => 300 + (d.i + d.j) * 70).duration(500).attr("opacity", 1);
 }
 
-function phase() {
-  const b = D.facts.pressure_by_phase_bat, w = D.facts.pressure_by_phase_bowl, ph = [["PP", "Powerplay"], ["MID", "Middle overs"], ["DEATH", "Death overs"]];
-  const tb = Object.values(b).reduce((a, c) => a + c), tw = Object.values(w).reduce((a, c) => a + c);
-  const host = document.getElementById("phase");
-  host.innerHTML = ph.map(([k, n]) => `<div style="margin:16px 0 6px;font-size:12.5px;font-weight:600">${n}</div>
-    ${[[b[k] / tb, "--blue"], [w[k] / tw, "--pink"]].map(([v, c]) => `<div style="display:flex;align-items:center;gap:12px;margin:6px 0"><div class="pbar" style="flex:1"><i data-w="${v * 100 / .5}" style="background:var(${c})"></i></div><span style="width:42px;text-align:right;font-weight:600">${Math.round(v * 100)}%</span></div>`).join("")}`).join("");
-  later(() => host.querySelectorAll(".pbar i").forEach(i => i.style.width = i.dataset.w + "%"), 80);
+/* ---------- 06 out of time ---------- */
+function oot() {
+  const o = D.oot, items = [[o.bowl.top_quartile_stays_above_median * 100, 0, "%", "of the best quarter of bowlers in 2022–24 stayed above the median in 2025–26", C.ember],
+    [o.bat.top_quartile_stays_above_median * 100, 0, "%", "the same for batters", C.char], [o.bowl.rank_correlation, 2, "", `rank correlation between the two periods for bowlers; ${o.bat.rank_correlation.toFixed(2)} for batters`, C.char]];
+  d3.select("#oot").selectAll("div").data(items).join("div").html(d => `<b class="num" style="color:${d[4]}">0</b><span>${d[3]}</span>`).select("b")
+    .transition().duration(1400).tween("t", function (d) { const i = d3.interpolateNumber(0, d[0]); return t => this.textContent = i(t).toFixed(d[1]) + d[2]; });
 }
 
-function stats(id, items, note) {
-  const host = document.getElementById(id);
-  host.innerHTML = `<div class="statrow">${items.map(i => `<div><div class="stat" style="color:${i[4] || "var(--ink)"}">0</div><span>${i[3]}</span></div>`).join("")}</div><p class="note" style="margin:0">${note}</p>`;
-  host.querySelectorAll(".stat").forEach((s, k) => countUp(s, items[k][0], items[k][1], items[k][2]));
-}
-
-function method() {
-  heat(); phase();
-  const o = D.oot, f = D.facts;
-  stats("oot", [[o.bowl.top_quartile_stays_above_median * 100, 0, "%", "of the best quarter of bowlers in 2022–24 stayed above the median", "var(--pink)"],
-                [o.bat.top_quartile_stays_above_median * 100, 0, "%", "same for batters", "var(--blue)"], [o.bowl.rank_correlation, 2, "", "bowler rank correlation (batters " + o.bat.rank_correlation.toFixed(2) + ")"]],
-    "Bowling under pressure repeats; batting under pressure is noisy from one period to the next. That is why the lists lean on long records and on agreement between two fits rather than one hot season.");
-  stats("stakes", [[f.pressure_share_high_stakes * 100, 0, "%", "of bowling pressure balls came in high-stakes games", "var(--gold)"], [0.3, 2, "", "swing in top-four chance that marks a virtual knockout"], [1, 1, "", "stake of a final or eliminator"]],
-    "A ball's pressure is what the side could lose on it, multiplied by one plus the match stake. A tight finish in a dead rubber counts for less than the same finish when the season is on the line.");
-}
-
-/* ---------- routing ---------- */
-function show(tab) {
-  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === tab));
-  const main = document.getElementById("main"), tpl = tab === "net" ? "t-net" : tab === "method" ? "t-method" : "t-players";
-  main.innerHTML = ""; main.appendChild(document.getElementById(tpl).content.cloneNode(true));
-  if (tab === "bat" || tab === "bowl") { side = tab; selected = 0; players(); } else if (tab === "net") network(); else method();
-}
-document.querySelectorAll("nav.tabs button").forEach(b => b.onclick = () => show(b.dataset.tab));
-facts(); show("bat");
+/* ---------- wiring ---------- */
+function render() { list(); profile(); field(); bump(); clock(); }
+d3.selectAll("#toggle button").on("click", function () { const s = this.dataset.s; if (s === side) return; side = s; sel = 0; metric = 0;
+  d3.selectAll("#toggle button").classed("on", function () { return this.dataset.s === s; }); render(); });
+facts(); render(); matrix(); heat(); oot();
 </script>
 </body>
 </html>
