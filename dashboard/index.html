@@ -413,6 +413,7 @@ function oot() {
 function render() { list(); profile(); field(); bump(); clock(); }
 d3.selectAll("#toggle button").on("click", function () { const s = this.dataset.s; if (s === side) return; side = s; sel = 0; metric = 0;
   d3.selectAll("#toggle button").classed("on", function () { return this.dataset.s === s; }); render(); });
+if (location.hash === "#bowlers") { side = "bowl"; d3.selectAll("#toggle button").classed("on", function () { return this.dataset.s === "bowl"; }); }
 facts(); render(); matrix(); heat(); oot();
 </script>
 </body>
