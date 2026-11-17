@@ -26,7 +26,7 @@ CRUCIBLE ranks the IPL and T20I batters and bowlers who perform most reliably wh
 - **Fair comparison:** every batter and bowler is fitted jointly in one hierarchical model over 24,054 matchups, with match conditions and competition-season strength estimated from the data.
 - **Ranking:** two converged model fits (all balls, pressure balls only), reviewed against the detailed evidence. The result is checked against four alternative definitions of reliability.
 
-The full method, evidence, validation and limitations are in **[REPORT.md](REPORT.md)**.
+The full method, evidence, validation and limitations are in **[REPORT.md](REPORT.md)**. A formatted PDF version with dashboard screenshots and reproduction steps is in **[CRUCIBLE_Report.pdf](CRUCIBLE_Report.pdf)**.
 
 ## Dashboard
 
